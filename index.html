@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weight Cut Planner</title>
+    <title>WEIGHT CUT PLANNER</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Barlow:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -18,451 +18,158 @@
       }
 
       :root {
-        --bg: #f5f2ee;
-        --surface: #ffffff;
-        --surface2: #f0ece6;
-        --border: #e2ddd7;
-        --text: #1a1612;
-        --text2: #6b6259;
-        --accent: #7c3aed;
-        --accent-light: #ede9fe;
-        --green: #15803d;
-        --green-bg: #f0fdf4;
-        --yellow: #92400e;
-        --yellow-bg: #fffbeb;
-        --orange: #c2410c;
-        --orange-bg: #fff7ed;
-        --red: #b91c1c;
-        --red-bg: #fef2f2;
-        --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
-        --radius: 12px;
+        --cream: #f2ede6;
+        --paper: #e8e0d5;
+        --white: #faf7f3;
+        --ink: #1a1410;
+        --ink2: #4a3f35;
+        --ink3: #8a7b6e;
+        --red: #c0281a;
+        --red-light: #f5d5d2;
+        --olive: #5c6b3a;
+        --olive-light: #dde5cc;
+        --border: #c8bfb2;
+        --border-heavy: #9a8e82;
+        --shadow: 4px 4px 0px #1a1410;
+        --shadow-sm: 2px 2px 0px #1a1410;
       }
 
       body {
-        font-family: "DM Sans", sans-serif;
-        background: var(--bg);
-        color: var(--text);
+        font-family: "Barlow", sans-serif;
+        background: var(--cream);
+        color: var(--ink);
         min-height: 100vh;
-        font-size: 15px;
-        line-height: 1.6;
+        font-size: 14px;
+        line-height: 1.5;
+        background-image: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 31px,
+          rgba(180, 160, 140, 0.12) 31px,
+          rgba(180, 160, 140, 0.12) 32px
+        );
       }
 
-      /* HEADER */
+      /* ─ HEADER ──────────────────────── */
       .header {
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        padding: 28px 24px;
-        text-align: center;
+        background: var(--ink);
+        padding: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .header-inner {
+        padding: 36px 24px 32px;
+        position: relative;
+        z-index: 1;
+      }
+      .header-stripe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--red) 0px,
+          var(--red) 32px,
+          var(--ink) 32px,
+          var(--ink) 40px
+        );
       }
       .header-eyebrow {
+        font-family: "Barlow Condensed", sans-serif;
         font-size: 11px;
-        letter-spacing: 0.2em;
+        letter-spacing: 0.35em;
         text-transform: uppercase;
-        color: var(--text2);
-        font-weight: 500;
+        color: var(--ink3);
+        font-weight: 600;
         margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .header-eyebrow::after {
+        content: "";
+        flex: 1;
+        max-width: 80px;
+        height: 1px;
+        background: var(--ink3);
       }
       .header h1 {
-        font-family: "DM Serif Display", serif;
-        font-size: clamp(28px, 6vw, 44px);
-        font-weight: 400;
-        line-height: 1.1;
-        color: var(--text);
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(48px, 11vw, 96px);
+        font-weight: 900;
+        line-height: 0.88;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: var(--white);
       }
-      .header h1 span {
-        color: var(--accent);
+      .header h1 .accent {
+        color: var(--red);
         font-style: italic;
       }
       .header-sub {
-        color: var(--text2);
-        font-size: 14px;
-        margin-top: 10px;
-        font-weight: 300;
+        color: var(--ink3);
+        font-size: 13px;
+        margin-top: 18px;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .header-deco {
+        position: absolute;
+        right: -20px;
+        bottom: -10px;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 180px;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.03);
+        line-height: 1;
+        user-select: none;
+        pointer-events: none;
+        text-transform: uppercase;
       }
 
-      /* LAYOUT */
+      /* ─ CONTAINER ───────────────────── */
       .container {
-        max-width: 860px;
+        max-width: 880px;
         margin: 0 auto;
         padding: 0 16px 80px;
       }
 
-      /* CARD */
-      .card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 28px;
-        margin-top: 24px;
-        box-shadow: var(--shadow);
-      }
-      .card-title {
-        font-size: 11px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--accent);
-        font-weight: 600;
-        margin-bottom: 22px;
-      }
-
-      /* FORM GRID */
-      .form-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-        gap: 18px;
-      }
-      .form-group label {
-        display: block;
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--text2);
-        font-weight: 500;
-        margin-bottom: 7px;
-      }
-      .form-group input,
-      .form-group select {
-        width: 100%;
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 10px 13px;
-        color: var(--text);
-        font-size: 14px;
-        font-family: "DM Sans", sans-serif;
-        outline: none;
-        transition:
-          border-color 0.15s,
-          box-shadow 0.15s;
-        appearance: none;
-      }
-      .form-group input:focus,
-      .form-group select:focus {
-        border-color: var(--accent);
-        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-        background: #fff;
-      }
-
-      /* BUTTON */
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: var(--accent);
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        padding: 12px 24px;
-        font-size: 14px;
-        font-family: "DM Sans", sans-serif;
-        font-weight: 600;
-        cursor: pointer;
-        transition:
-          background 0.15s,
-          transform 0.1s;
-        margin-top: 22px;
-      }
-      .btn:hover {
-        background: #6d28d9;
-        transform: translateY(-1px);
-      }
-      .btn:active {
-        transform: translateY(0);
-      }
-      .btn-outline {
-        background: transparent;
-        color: var(--accent);
-        border: 1.5px solid var(--accent);
-      }
-      .btn-outline:hover {
-        background: var(--accent-light);
-      }
-
-      /* STAT CARDS */
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 14px;
-        margin-top: 24px;
-      }
-      .stat-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 18px 16px;
-        box-shadow: var(--shadow);
-      }
-      .stat-label {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--text2);
-        font-weight: 500;
-        margin-bottom: 8px;
-      }
-      .stat-value {
-        font-family: "DM Serif Display", serif;
-        font-size: 28px;
-        line-height: 1;
-      }
-      .stat-unit {
-        font-size: 12px;
-        font-family: "DM Sans", sans-serif;
-        color: var(--text2);
-        font-weight: 400;
-      }
-
-      /* RISK BANNER */
-      .risk-banner {
-        border-radius: var(--radius);
-        padding: 16px 20px;
-        margin-top: 16px;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        font-size: 14px;
-      }
-      .risk-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        flex-shrink: 0;
-      }
-      .risk-label {
-        font-weight: 600;
-      }
-      .risk-desc {
-        color: var(--text2);
-        margin-top: 2px;
-        font-size: 13px;
-      }
-
-      /* TIMELINE */
-      .timeline {
-        margin-top: 8px;
-      }
-      .day-row {
-        display: flex;
-        gap: 16px;
-        align-items: flex-start;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 14px 18px;
-        margin-bottom: 8px;
-        transition: box-shadow 0.15s;
-      }
-      .day-row:hover {
-        box-shadow: var(--shadow);
-      }
-      .day-row.today {
-        border-color: var(--accent);
-        background: var(--accent-light);
-      }
-      .day-date {
-        min-width: 72px;
-        text-align: center;
-        flex-shrink: 0;
-      }
-      .day-date-label {
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--text2);
-        font-weight: 500;
-      }
-      .day-date-weight {
-        font-family: "DM Serif Display", serif;
-        font-size: 22px;
-        line-height: 1.1;
-        margin-top: 2px;
-      }
-      .day-date-unit {
-        font-size: 11px;
-        color: var(--text2);
-        font-family: "DM Sans", sans-serif;
-      }
-      .day-content {
-        flex: 1;
-      }
-      .day-phase-name {
-        font-size: 13px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .day-tips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-      }
-      .tip-tag {
-        font-size: 11px;
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 5px;
-        padding: 3px 8px;
-        color: var(--text2);
-        font-weight: 400;
-      }
-
-      /* PHASE LEGEND */
-      .phase-legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 20px;
-      }
-      .phase-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        border-radius: 6px;
-        padding: 4px 10px;
-        font-size: 12px;
-        font-weight: 500;
-        border: 1px solid transparent;
-      }
-
-      /* REHYDRATION BOX */
-      .rehyd-box {
-        background: var(--green-bg);
-        border: 1px solid #bbf7d0;
-        border-radius: var(--radius);
-        padding: 20px;
-        margin-top: 10px;
-      }
-      .rehyd-title {
-        font-weight: 600;
-        color: var(--green);
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 12px;
-      }
-      .rehyd-list {
-        list-style: none;
-      }
-      .rehyd-list li {
-        font-size: 13px;
-        color: #166534;
-        padding: 3px 0;
-      }
-      .rehyd-list li::before {
-        content: "✓  ";
-        font-weight: 700;
-      }
-
-      /* WARNING BOX */
-      .warn-box {
-        background: var(--orange-bg);
-        border: 1px solid #fed7aa;
-        border-radius: var(--radius);
-        padding: 14px 18px;
-        margin-top: 12px;
-        font-size: 13px;
-        color: var(--orange);
-      }
-
-      /* WEIGHT LOG */
-      .log-entry {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid var(--border);
-        font-size: 13px;
-      }
-      .log-entry:last-child {
-        border-bottom: none;
-      }
-      .log-date {
-        color: var(--text2);
-      }
-      .log-weight {
-        font-weight: 600;
-        font-size: 15px;
-      }
-      .log-diff-pos {
-        color: var(--red);
-        font-size: 12px;
-      }
-      .log-diff-neg {
-        color: var(--green);
-        font-size: 12px;
-      }
-
-      /* DELETE BTN */
-      .btn-delete {
-        background: none;
-        border: none;
-        color: #ccc;
-        cursor: pointer;
-        font-size: 16px;
-        padding: 2px 6px;
-        border-radius: 4px;
-        transition:
-          color 0.15s,
-          background 0.15s;
-      }
-      .btn-delete:hover {
-        color: var(--red);
-        background: var(--red-bg);
-      }
-
-      /* EMPTY STATE */
-      .empty {
-        text-align: center;
-        padding: 50px 20px;
-        color: var(--text2);
-        font-size: 14px;
-      }
-      .empty-icon {
-        font-size: 36px;
-        margin-bottom: 12px;
-      }
-
-      /* DISCLAIMER */
-      .disclaimer {
-        border-top: 1px solid var(--border);
-        margin-top: 48px;
-        padding-top: 20px;
-        text-align: center;
-        font-size: 11px;
-        color: #bbb;
-        line-height: 1.8;
-      }
-
-      /* TABS */
+      /* ─ TABS ────────────────────────── */
       .tabs {
         display: flex;
-        gap: 4px;
-        background: var(--surface2);
-        border-radius: 10px;
-        padding: 4px;
-        margin-top: 24px;
-        border: 1px solid var(--border);
+        margin-top: 28px;
+        border: 2px solid var(--ink);
+        background: var(--white);
+        box-shadow: var(--shadow);
       }
       .tab-btn {
         flex: 1;
         background: none;
         border: none;
-        border-radius: 7px;
-        padding: 9px 12px;
-        font-size: 13px;
-        font-family: "DM Sans", sans-serif;
-        font-weight: 500;
-        color: var(--text2);
+        border-right: 2px solid var(--ink);
+        padding: 12px 16px;
+        font-size: 12px;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--ink3);
         cursor: pointer;
-        transition: all 0.15s;
+        transition: all 0.1s;
+      }
+      .tab-btn:last-child {
+        border-right: none;
       }
       .tab-btn.active {
-        background: var(--surface);
-        color: var(--accent);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        background: var(--ink);
+        color: var(--white);
+      }
+      .tab-btn:hover:not(.active) {
+        background: var(--paper);
+        color: var(--ink);
       }
       .tab-content {
         display: none;
@@ -471,10 +178,343 @@
         display: block;
       }
 
-      /* LOG INPUT ROW */
+      /* ─ CARD ────────────────────────── */
+      .card {
+        background: var(--white);
+        border: 2px solid var(--ink);
+        padding: 24px;
+        margin-top: 20px;
+        box-shadow: var(--shadow);
+        position: relative;
+      }
+      .card-title {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--red);
+        font-weight: 700;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .card-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* ─ FORM ────────────────────────── */
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+        gap: 16px;
+      }
+      .form-group label {
+        display: block;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ink2);
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        background: var(--cream);
+        border: 2px solid var(--border-heavy);
+        padding: 9px 11px;
+        color: var(--ink);
+        font-size: 14px;
+        font-family: "Barlow", sans-serif;
+        font-weight: 500;
+        outline: none;
+        border-radius: 0;
+        appearance: none;
+        transition: border-color 0.1s;
+      }
+      .form-group input:focus,
+      .form-group select:focus {
+        border-color: var(--ink);
+        background: var(--white);
+        box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.08);
+      }
+
+      /* ─ BUTTON ──────────────────────── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--red);
+        color: var(--white);
+        border: 2px solid var(--ink);
+        padding: 12px 28px;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: var(--shadow-sm);
+        transition:
+          transform 0.08s,
+          box-shadow 0.08s;
+        border-radius: 0;
+        margin-top: 20px;
+      }
+      .btn:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 3px 3px 0 var(--ink);
+      }
+      .btn:active {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 var(--ink);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--ink);
+        border: 2px solid var(--ink);
+        box-shadow: var(--shadow-sm);
+      }
+      .btn-ghost:hover {
+        background: var(--ink);
+        color: var(--white);
+      }
+
+      /* ─ STATS ───────────────────────── */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0;
+        margin-top: 20px;
+        border: 2px solid var(--ink);
+        box-shadow: var(--shadow);
+      }
+      .stat-card {
+        background: var(--white);
+        padding: 18px 16px;
+        border-right: 2px solid var(--ink);
+        position: relative;
+      }
+      .stat-card:last-child {
+        border-right: none;
+      }
+      .stat-label {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--ink3);
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .stat-value {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 32px;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .stat-unit {
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--ink3);
+        font-family: "Barlow", sans-serif;
+      }
+
+      /* ─ RISK BANNER ─────────────────── */
+      .risk-banner {
+        border: 2px solid var(--ink);
+        padding: 14px 18px;
+        margin-top: 16px;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        box-shadow: var(--shadow-sm);
+      }
+      .risk-tag {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border: 1.5px solid currentColor;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .risk-desc-text {
+        font-size: 13px;
+        color: var(--ink2);
+        line-height: 1.5;
+      }
+      .risk-warn {
+        font-size: 12px;
+        color: var(--red);
+        font-weight: 600;
+        margin-top: 4px;
+      }
+
+      /* ─ PHASE LEGEND ────────────────── */
+      .phase-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      .phase-pill {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border: 1.5px solid currentColor;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* ─ TIMELINE ────────────────────── */
+      .day-row {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        background: var(--white);
+        border: 1.5px solid var(--border);
+        border-left: 4px solid var(--border-heavy);
+        padding: 12px 16px;
+        margin-bottom: 6px;
+        transition: border-color 0.1s;
+      }
+      .day-row:hover {
+        border-color: var(--ink);
+        border-left-color: var(--ink);
+      }
+      .day-row.today {
+        border-color: var(--ink);
+        border-left-color: var(--red);
+        border-left-width: 5px;
+        background: #fff9f8;
+      }
+      .day-row.fight-day {
+        border-color: var(--ink);
+        border-left-color: var(--olive);
+        border-left-width: 5px;
+        background: #f7f9f4;
+      }
+      .day-date {
+        min-width: 68px;
+        text-align: left;
+        flex-shrink: 0;
+        padding-top: 2px;
+      }
+      .day-label {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 9px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ink3);
+        font-weight: 700;
+      }
+      .day-weight {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 24px;
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+      }
+      .day-weight-unit {
+        font-size: 11px;
+        font-family: "Barlow", sans-serif;
+        color: var(--ink3);
+        font-weight: 400;
+      }
+      .day-content {
+        flex: 1;
+      }
+      .day-phase-name {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 7px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .day-tips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .tip-tag {
+        font-size: 11px;
+        font-weight: 500;
+        background: var(--cream);
+        border: 1px solid var(--border);
+        padding: 2px 7px;
+        color: var(--ink2);
+        border-radius: 0;
+      }
+
+      /* ─ REHYD BOX ───────────────────── */
+      .rehyd-box {
+        border: 2px solid var(--olive);
+        background: var(--olive-light);
+        padding: 18px 20px;
+        margin-top: 10px;
+      }
+      .rehyd-title {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 800;
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--olive);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .rehyd-list {
+        list-style: none;
+      }
+      .rehyd-list li {
+        font-size: 13px;
+        color: #3a4a25;
+        padding: 2px 0;
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+      }
+      .rehyd-list li::before {
+        content: "▶";
+        font-size: 8px;
+        color: var(--olive);
+        flex-shrink: 0;
+      }
+
+      /* ─ WARN BOX ────────────────────── */
+      .warn-box {
+        border: 2px solid var(--red);
+        background: var(--red-light);
+        padding: 12px 16px;
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--red);
+        font-weight: 500;
+      }
+
+      /* ─ LOG ─────────────────────────── */
       .log-input-row {
         display: flex;
-        gap: 10px;
+        gap: 12px;
         align-items: flex-end;
         margin-bottom: 20px;
       }
@@ -484,47 +524,167 @@
       }
       .log-input-row .btn {
         margin-top: 0;
-        white-space: nowrap;
+      }
+      .log-entry {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+        gap: 12px;
+      }
+      .log-entry:last-child {
+        border-bottom: none;
+      }
+      .log-date {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        color: var(--ink2);
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .log-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .log-weight {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 22px;
+        font-weight: 900;
+      }
+      .log-diff-pos {
+        font-size: 12px;
+        color: var(--red);
+        font-weight: 600;
+        font-family: "Barlow Condensed", sans-serif;
+      }
+      .log-diff-neg {
+        font-size: 12px;
+        color: var(--olive);
+        font-weight: 600;
+        font-family: "Barlow Condensed", sans-serif;
+      }
+      .btn-delete {
+        background: none;
+        border: 1.5px solid var(--border);
+        color: var(--ink3);
+        cursor: pointer;
+        font-size: 14px;
+        width: 26px;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.1s;
+        border-radius: 0;
+        font-family: "Barlow", sans-serif;
+      }
+      .btn-delete:hover {
+        border-color: var(--red);
+        color: var(--red);
+        background: var(--red-light);
       }
 
-      @media (max-width: 500px) {
+      /* ─ EMPTY STATE ─────────────────── */
+      .empty {
+        text-align: center;
+        padding: 48px 20px;
+        color: var(--ink3);
+        font-size: 13px;
+      }
+      .empty-icon {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 48px;
+        font-weight: 900;
+        color: var(--border);
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+      }
+
+      /* ─ DISCLAIMER ──────────────────── */
+      .disclaimer {
+        border-top: 1px solid var(--border);
+        margin-top: 48px;
+        padding-top: 18px;
+        text-align: center;
+        font-size: 11px;
+        color: var(--ink3);
+        line-height: 1.8;
+        letter-spacing: 0.03em;
+      }
+
+      /* ─ SECTION DIVIDER ─────────────── */
+      .section-divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 28px 0 16px;
+      }
+      .section-divider-text {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--ink);
+        white-space: nowrap;
+      }
+      .section-divider-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border-heavy);
+      }
+
+      @media (max-width: 520px) {
         .card {
-          padding: 20px 16px;
+          padding: 18px 14px;
+        }
+        .stats-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stat-card {
+          border-bottom: 2px solid var(--ink);
         }
         .day-row {
           flex-direction: column;
+          gap: 8px;
         }
-        .day-date {
-          text-align: left;
-          min-width: unset;
+        .log-input-row {
+          flex-direction: column;
         }
       }
     </style>
   </head>
   <body>
+    <!-- HEADER -->
     <div class="header">
-      <div class="header-eyebrow">Combat Sports</div>
-      <h1>Weight Cut <span>Planner</span></h1>
-      <p class="header-sub">
-        Professionelle Gewichtsplanung — alles lokal im Browser gespeichert.
-      </p>
+      <div class="header-stripe"></div>
+      <div class="header-inner" style="max-width: 880px; margin: 0 auto">
+        <div class="header-eyebrow">Combat Sports · Gewichtsmanagement</div>
+        <h1>WEIGHT<br /><span class="accent">CUT</span><br />PLANNER</h1>
+        <p class="header-sub">Taktische Planung. Präzise Ausführung.</p>
+      </div>
+      <div class="header-deco">CUT</div>
     </div>
 
     <div class="container">
       <!-- TABS -->
       <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('planner')">
-          ⚖️ Planner
+        <button class="tab-btn active" onclick="switchTab('planner', this)">
+          ⊕ Planner
         </button>
-        <button class="tab-btn" onclick="switchTab('log')">
-          📊 Gewichtstagebuch
+        <button class="tab-btn" onclick="switchTab('log', this)">
+          ◈ Gewichtstagebuch
         </button>
       </div>
 
-      <!-- TAB: PLANNER -->
+      <!-- ── TAB: PLANNER ── -->
       <div id="tab-planner" class="tab-content active">
         <div class="card">
-          <div class="card-title">Deine Daten</div>
+          <div class="card-title">Eingabe</div>
           <div class="form-grid">
             <div class="form-group">
               <label>Sportart</label>
@@ -562,7 +722,7 @@
               />
             </div>
             <div class="form-group">
-              <label>Wettkampftag</label>
+              <label>Wettkampfdatum</label>
               <input type="date" id="fightDate" oninput="saveForm()" />
             </div>
             <div class="form-group">
@@ -575,19 +735,19 @@
             <div class="form-group">
               <label>Erfahrung</label>
               <select id="experience" onchange="saveForm()">
-                <option value="beginner">Anfänger (erster Cut)</option>
-                <option value="intermediate">Intermediate (1–5 Cuts)</option>
-                <option value="advanced">Erfahren (regelmäßig)</option>
+                <option value="beginner">Anfänger</option>
+                <option value="intermediate" selected>Intermediate</option>
+                <option value="advanced">Erfahren</option>
               </select>
             </div>
           </div>
-          <button class="btn" onclick="calculate()">Plan berechnen →</button>
+          <button class="btn" onclick="calculate()">▶ Plan berechnen</button>
         </div>
 
         <div id="results"></div>
       </div>
 
-      <!-- TAB: LOG -->
+      <!-- ── TAB: LOG ── -->
       <div id="tab-log" class="tab-content">
         <div class="card">
           <div class="card-title">Gewicht eintragen</div>
@@ -601,11 +761,11 @@
               <input
                 type="number"
                 id="logWeight"
-                placeholder="z.B. 83.2"
+                placeholder="83.2"
                 step="0.1"
               />
             </div>
-            <button class="btn" onclick="addLogEntry()">Eintragen</button>
+            <button class="btn" onclick="addLogEntry()">+ Eintragen</button>
           </div>
           <div id="logList"></div>
         </div>
@@ -613,7 +773,7 @@
     </div>
 
     <script>
-      // ─── DATA ───────────────────────────────────────────────────────────
+      // ─── DATA ──────────────────────────────────────────────────────────────────
       const WEIGHT_CLASSES = {
         "BJJ / Grappling": [
           { name: "Rooster (-57,5 kg)", limit: 57.5 },
@@ -679,47 +839,41 @@
       const PHASES = {
         clean: {
           name: "Clean Eating",
-          icon: "🥗",
-          color: "#7c3aed",
-          bg: "#ede9fe",
-          border: "#c4b5fd",
+          icon: "◈",
+          color: "#5c6b3a",
+          border: "#5c6b3a",
         },
         lowcarb: {
-          name: "Low-Carb Phase",
-          icon: "🍗",
-          color: "#0369a1",
-          bg: "#e0f2fe",
-          border: "#7dd3fc",
+          name: "Low-Carb Depletion",
+          icon: "◈",
+          color: "#7a5c1a",
+          border: "#7a5c1a",
         },
         sodium: {
-          name: "Natriumreduktion",
-          icon: "🧂",
-          color: "#d97706",
-          bg: "#fef3c7",
-          border: "#fcd34d",
+          name: "Natrium-Reduktion",
+          icon: "◈",
+          color: "#1a5a7a",
+          border: "#1a5a7a",
         },
         water: {
-          name: "Wasserladung → Cut",
-          icon: "💧",
-          color: "#0891b2",
-          bg: "#cffafe",
-          border: "#67e8f9",
+          name: "Wasserladung→Cut",
+          icon: "◈",
+          color: "#1a6b6b",
+          border: "#1a6b6b",
         },
         cut: {
           name: "Aktiver Watercut",
-          icon: "🔥",
-          color: "#dc2626",
-          bg: "#fee2e2",
-          border: "#fca5a5",
+          icon: "◈",
+          color: "#c0281a",
+          border: "#c0281a",
         },
       };
 
-      // ─── INIT ────────────────────────────────────────────────────────────
+      // ─── INIT ──────────────────────────────────────────────────────────────────
       window.addEventListener("DOMContentLoaded", () => {
         populateWeightClasses();
         loadForm();
         renderLogList();
-        // set today as default log date
         document.getElementById("logDate").value = today();
       });
 
@@ -727,7 +881,7 @@
         return new Date().toISOString().split("T")[0];
       }
 
-      function switchTab(tab) {
+      function switchTab(tab, btn) {
         document
           .querySelectorAll(".tab-btn")
           .forEach((b) => b.classList.remove("active"));
@@ -735,10 +889,10 @@
           .querySelectorAll(".tab-content")
           .forEach((c) => c.classList.remove("active"));
         document.getElementById("tab-" + tab).classList.add("active");
-        event.target.classList.add("active");
+        btn.classList.add("active");
       }
 
-      // ─── WEIGHT CLASSES ──────────────────────────────────────────────────
+      // ─── WEIGHT CLASSES ────────────────────────────────────────────────────────
       function populateWeightClasses(sport) {
         const s = sport || document.getElementById("sport").value;
         const sel = document.getElementById("weightClass");
@@ -758,18 +912,20 @@
         saveForm();
       }
 
-      // ─── LOCALSTORAGE: FORM ──────────────────────────────────────────────
+      // ─── FORM PERSISTENCE ──────────────────────────────────────────────────────
       function saveForm() {
-        const data = {
-          sport: document.getElementById("sport").value,
-          weightClass: document.getElementById("weightClass").value,
-          customLimit: document.getElementById("customLimit").value,
-          currentWeight: document.getElementById("currentWeight").value,
-          fightDate: document.getElementById("fightDate").value,
-          weighInType: document.getElementById("weighInType").value,
-          experience: document.getElementById("experience").value,
-        };
-        localStorage.setItem("wcp_form", JSON.stringify(data));
+        localStorage.setItem(
+          "wcp_form",
+          JSON.stringify({
+            sport: document.getElementById("sport").value,
+            weightClass: document.getElementById("weightClass").value,
+            customLimit: document.getElementById("customLimit").value,
+            currentWeight: document.getElementById("currentWeight").value,
+            fightDate: document.getElementById("fightDate").value,
+            weighInType: document.getElementById("weighInType").value,
+            experience: document.getElementById("experience").value,
+          }),
+        );
       }
 
       function loadForm() {
@@ -795,7 +951,7 @@
         if (d.currentWeight && d.fightDate) calculate();
       }
 
-      // ─── LOCALSTORAGE: LOG ───────────────────────────────────────────────
+      // ─── LOG ───────────────────────────────────────────────────────────────────
       function getLog() {
         return JSON.parse(localStorage.getItem("wcp_log") || "[]");
       }
@@ -809,8 +965,8 @@
         if (!date || isNaN(weight))
           return alert("Bitte Datum und Gewicht eingeben.");
         const log = getLog();
-        const existing = log.findIndex((e) => e.date === date);
-        if (existing >= 0) log[existing].weight = weight;
+        const idx = log.findIndex((e) => e.date === date);
+        if (idx >= 0) log[idx].weight = weight;
         else log.push({ date, weight });
         log.sort((a, b) => b.date.localeCompare(a.date));
         saveLog(log);
@@ -819,8 +975,7 @@
       }
 
       function deleteLogEntry(date) {
-        const log = getLog().filter((e) => e.date !== date);
-        saveLog(log);
+        saveLog(getLog().filter((e) => e.date !== date));
         renderLogList();
       }
 
@@ -829,7 +984,7 @@
         const el = document.getElementById("logList");
         if (!log.length) {
           el.innerHTML =
-            '<div class="empty"><div class="empty-icon">📋</div>Noch keine Einträge. Trag dein Gewicht täglich ein!</div>';
+            '<div class="empty"><div class="empty-icon">LEER</div>Noch keine Einträge. Trag dein Gewicht täglich ein!</div>';
           return;
         }
         el.innerHTML = log
@@ -841,20 +996,19 @@
               const sign = diff > 0 ? "+" : "";
               diffHtml = `<span class="${diff > 0 ? "log-diff-pos" : "log-diff-neg"}">${sign}${diff.toFixed(1)} kg</span>`;
             }
-            return `
-      <div class="log-entry">
-        <span class="log-date">${formatDate(entry.date)}</span>
-        <span style="display:flex;align-items:center;gap:12px">
-          ${diffHtml}
-          <span class="log-weight">${entry.weight.toFixed(1)} kg</span>
-          <button class="btn-delete" onclick="deleteLogEntry('${entry.date}')" title="Löschen">×</button>
-        </span>
-      </div>`;
+            return `<div class="log-entry">
+      <span class="log-date">${formatDate(entry.date)}</span>
+      <div class="log-right">
+        ${diffHtml}
+        <span class="log-weight">${entry.weight.toFixed(1)} kg</span>
+        <button class="btn-delete" onclick="deleteLogEntry('${entry.date}')" title="Löschen">×</button>
+      </div>
+    </div>`;
           })
           .join("");
       }
 
-      // ─── CALCULATE ───────────────────────────────────────────────────────
+      // ─── CALCULATE ─────────────────────────────────────────────────────────────
       function calculate() {
         saveForm();
         const cw = parseFloat(document.getElementById("currentWeight").value);
@@ -875,19 +1029,19 @@
           if (wc) weightLimit = wc.limit;
         }
 
-        const resultsEl = document.getElementById("results");
+        const el = document.getElementById("results");
 
         if (!cw || !weightLimit || !fightDate) {
-          resultsEl.innerHTML =
-            '<div class="empty"><div class="empty-icon">⚖️</div>Bitte Gewicht, Gewichtsklasse und Wettkampfdatum eingeben.</div>';
+          el.innerHTML =
+            '<div class="empty"><div class="empty-icon">KEIN PLAN</div>Gewicht, Gewichtsklasse und Datum eingeben.</div>';
           return;
         }
 
         const todayStr = today();
         const daysUntil = daysBetween(todayStr, fightDate);
         if (daysUntil < 0) {
-          resultsEl.innerHTML =
-            '<div class="empty"><div class="empty-icon">📅</div>Das Wettkampfdatum liegt in der Vergangenheit.</div>';
+          el.innerHTML =
+            '<div class="empty"><div class="empty-icon">VERPASST</div>Der Wettkampftag liegt in der Vergangenheit.</div>';
           return;
         }
 
@@ -895,7 +1049,6 @@
         const pct = tocut > 0 ? (tocut / cw) * 100 : 0;
         const risk = getRisk(pct);
         const rehydHours = weighInType === "day_before" ? 20 : 2;
-
         const schedule = buildSchedule(
           cw,
           weightLimit,
@@ -908,87 +1061,79 @@
 
         let html = "";
 
-        // Stat Cards
+        // STATS
         html += `<div class="stats-grid">
-    ${statCard("Zu schneiden", tocut > 0 ? tocut.toFixed(1) + " kg" : "0 kg", risk.color)}
-    ${statCard("% Körpergewicht", pct.toFixed(1) + "%", risk.color)}
-    ${statCard("Tage bis Kampf", daysUntil, "#7c3aed")}
-    ${statCard("Rehydration-Fenster", "~" + rehydHours + "h", "#15803d")}
+    ${sc("Zu schneiden", (tocut > 0 ? tocut.toFixed(1) : "0") + '<span class="stat-unit"> kg</span>', risk.color)}
+    ${sc("% Körpergewicht", pct.toFixed(1) + '<span class="stat-unit"> %</span>', risk.color)}
+    ${sc("Tage bis Kampf", daysUntil, "#1a1410")}
+    ${sc("Rehydration", "~" + rehydHours + '<span class="stat-unit"> h</span>', "#5c6b3a")}
   </div>`;
 
-        // Risk Banner
-        html += `<div class="risk-banner" style="background:${risk.bg};border:1px solid ${risk.border}">
-    <div class="risk-dot" style="background:${risk.color}"></div>
+        // RISK
+        html += `<div class="risk-banner" style="background:${risk.bg};border-color:${risk.color}">
+    <span class="risk-tag" style="color:${risk.color}">▌ ${risk.label}</span>
     <div>
-      <div class="risk-label" style="color:${risk.color}">${risk.label}: ${risk.desc}</div>
-      ${tocut <= 0 ? '<div class="risk-desc">Du bist bereits unter dem Limit — kein aktiver Cut nötig.</div>' : ""}
-      ${experience === "beginner" && pct > 5 ? '<div class="risk-desc" style="color:#c2410c;margin-top:4px">⚠️ Als Anfänger empfehlen wir bei diesem Cut unbedingt einen erfahrenen Coach.</div>' : ""}
+      <div class="risk-desc-text">${risk.desc}</div>
+      ${tocut <= 0 ? '<div class="risk-warn">✓ Du bist bereits unter dem Limit — kein aktiver Cut nötig.</div>' : ""}
+      ${experience === "beginner" && pct > 5 ? '<div class="risk-warn">⚠ Als Anfänger: Coach hinzuziehen bei diesem Cut.</div>' : ""}
     </div>
   </div>`;
 
-        // Same-day warning
         if (weighInType === "same_day" && tocut > 3) {
-          html += `<div class="warn-box">⚠️ <strong>Same-Day Wiegen:</strong> Bei mehr als 3 kg Cut mit nur ~2h Rehydration ist das medizinisch riskant. Erwäge die nächsthöhere Gewichtsklasse.</div>`;
+          html += `<div class="warn-box">⚠ SAME-DAY WIEGEN: Über 3 kg Cut mit nur ~2h Rehydration ist medizinisch riskant. Erwäge die nächsthöhere Klasse.</div>`;
         }
 
-        // Timeline
+        // TIMELINE
         if (schedule.length > 0) {
-          html += `<div class="card" style="margin-top:24px">
-      <div class="card-title">Dein Cut-Plan — Tag für Tag</div>`;
+          html += `<div class="card" style="margin-top:20px"><div class="card-title">Cut-Plan</div>`;
 
-          // Legend
           html += `<div class="phase-legend">`;
           Object.values(PHASES).forEach((p) => {
-            html += `<div class="phase-pill" style="background:${p.bg};border-color:${p.border};color:${p.color}">${p.icon} ${p.name}</div>`;
+            html += `<div class="phase-pill" style="color:${p.color};border-color:${p.border}">${p.icon} ${p.name}</div>`;
           });
-          html += `</div><div class="timeline">`;
+          html += `</div>`;
 
           schedule.forEach((day) => {
             const p = PHASES[day.phase];
             const isToday = day.date === todayStr;
-            const label =
-              day.daysLeft === 1
-                ? weighInType === "day_before"
-                  ? "🏁 WIEGEN"
-                  : "🥊 KAMPF"
-                : isToday
-                  ? "📍 HEUTE"
-                  : formatDate(day.date);
-
-            html += `<div class="day-row${isToday ? " today" : ""}">
+            const isFight = day.daysLeft === 1;
+            const label = isFight
+              ? weighInType === "day_before"
+                ? "▶ WIEGEN"
+                : "▶ KAMPF"
+              : isToday
+                ? "▶ HEUTE"
+                : formatDate(day.date);
+            const rowClass = `day-row${isToday ? " today" : ""}${isFight ? " fight-day" : ""}`;
+            html += `<div class="${rowClass}" style="border-left-color:${p.color}">
         <div class="day-date">
-          <div class="day-date-label">${label}</div>
-          <div class="day-date-weight" style="color:${p.color}">${day.target.toFixed(1)}<span class="day-date-unit"> kg</span></div>
+          <div class="day-label">${label}</div>
+          <div class="day-weight" style="color:${p.color}">${day.target.toFixed(1)}<span class="day-weight-unit"> kg</span></div>
         </div>
         <div class="day-content">
           <div class="day-phase-name" style="color:${p.color}">${p.icon} ${p.name}</div>
-          <div class="day-tips">
-            ${day.tips.map((t) => `<span class="tip-tag">${t}</span>`).join("")}
-          </div>
+          <div class="day-tips">${day.tips.map((t) => `<span class="tip-tag">${t}</span>`).join("")}</div>
         </div>
       </div>`;
           });
 
-          html += `</div>`;
-
-          // Rehydration
           const isAdv = weighInType === "day_before";
           html += `<div class="rehyd-box" style="margin-top:12px">
-      <div class="rehyd-title">🏆 Nach dem Wiegen — Rehydration (~${rehydHours}h)</div>
+      <div class="rehyd-title">▶ Nach dem Wiegen — Rehydration (~${rehydHours}h)</div>
       <ul class="rehyd-list">
         ${
           isAdv
             ? `
           <li>Sofort: 500ml Elektrolytgetränk + leichter Snack</li>
-          <li>Erste 4h: 1–2L langsam trinken (nicht saufen!)</li>
+          <li>Erste 4h: 1–2L langsam trinken (nicht saufen)</li>
           <li>Leichte Carbs: Banane, Reis, Toast</li>
           <li>Schlafen: Körper regeneriert nachts enorm</li>
           <li>Kampftag Morgen: Normales Frühstück, 500ml Wasser</li>
           <li>Vor dem Kampf: Kleiner Snack 1–2h vorher</li>
         `
             : `
-          <li>Sofort nach Wiegen: Elektrolyte + schnelle Carbs</li>
-          <li>Alle 15min: 150–200ml (nicht auf einmal schlucken)</li>
+          <li>Sofort: Elektrolyte + schnelle Carbs</li>
+          <li>Alle 15min: 150–200ml (nicht auf einmal)</li>
           <li>Banane, Datteln, Weißbrot — leicht verdaulich</li>
           <li>Kein schweres Essen direkt vor dem Kampf</li>
         `
@@ -999,12 +1144,12 @@
           html += `</div>`;
         }
 
-        html += `<div class="disclaimer">Diese App ersetzt keine medizinische oder sportliche Fachberatung.<br>Aggressive Weight Cuts können gesundheitliche Risiken darstellen. Konsultiere bei Unsicherheiten einen erfahrenen Coach oder Sportarzt.</div>`;
+        html += `<div class="disclaimer">Diese App ersetzt keine medizinische oder sportliche Fachberatung.<br>Aggressive Weight Cuts können gesundheitliche Risiken darstellen. Im Zweifel Coach oder Sportarzt konsultieren.</div>`;
 
-        resultsEl.innerHTML = html;
+        el.innerHTML = html;
       }
 
-      // ─── SCHEDULE BUILDER ────────────────────────────────────────────────
+      // ─── SCHEDULE ──────────────────────────────────────────────────────────────
       function buildSchedule(
         cw,
         limit,
@@ -1015,20 +1160,16 @@
         weighInType,
       ) {
         if (daysUntil < 1) return [];
-        const schedule = [];
-
+        const out = [];
         for (let i = 0; i < daysUntil; i++) {
           const d = new Date(fightDate);
           d.setDate(d.getDate() - (daysUntil - i));
           const dateStr = d.toISOString().split("T")[0];
           const daysLeft = daysUntil - i;
-
           let phase, target, tips;
-
           if (daysLeft > 7) {
             phase = "clean";
-            const dailyLoss = Math.min(0.3, tocut / daysUntil);
-            target = cw - i * dailyLoss;
+            target = cw - i * Math.min(0.3, tocut / daysUntil);
             tips = [
               "Normales Training",
               "Kein Junk-Food",
@@ -1038,27 +1179,27 @@
             ];
           } else if (daysLeft > 4) {
             phase = "lowcarb";
-            target = limit + tocut * 0.5 - (7 - daysLeft) * 0.1;
+            target = limit + tocut * 0.5 - (7 - daysLeft) * 0.15;
             tips = [
               "Max. 50g Carbs/Tag",
-              "Hohe Proteinzufuhr (2g/kg)",
+              "Protein: 2g/kg Körpergewicht",
               "Kein Obst, kein Brot",
-              "Leichtes Training",
-              "Kein Salz kochen",
+              "Training reduzieren",
+              "Null Salz beim Kochen",
             ];
           } else if (daysLeft > 2) {
             phase = "sodium";
-            target = limit + tocut * 0.2;
+            target = limit + tocut * 0.18;
             tips = [
-              "Null Salz",
+              "Absolut kein Salz",
               "Wasserladung: 3–4L/Tag",
-              "Kein verarbeitetes Essen",
+              "Kein Fertigessen",
               "Sauna optional",
-              "Low-Carb weiter",
+              "Low-Carb weiterführen",
             ];
           } else if (daysLeft === 2) {
             phase = "water";
-            target = limit + tocut * 0.07;
+            target = limit + tocut * 0.06;
             tips = [
               "Vormittag: 2–3L trinken",
               "Nachmittag: Wasser stark drosseln",
@@ -1071,14 +1212,13 @@
             target = limit;
             tips = [
               "Kein Essen, kein Trinken",
-              "Sauna / Trainingsanzug",
+              "Sauna / Plastikanzug",
               "Körper aktiv halten",
               "Mentale Stärke!",
-              "Danach sofort rehydrieren",
+              "Nach Wiegen: sofort rehydrieren",
             ];
           }
-
-          schedule.push({
+          out.push({
             date: dateStr,
             daysLeft,
             phase,
@@ -1086,58 +1226,53 @@
             tips,
           });
         }
-        return schedule;
+        return out;
       }
 
-      // ─── HELPERS ─────────────────────────────────────────────────────────
+      // ─── HELPERS ───────────────────────────────────────────────────────────────
       function daysBetween(d1, d2) {
         return Math.ceil((new Date(d2) - new Date(d1)) / 86400000);
       }
-
-      function formatDate(dateStr) {
-        const d = new Date(dateStr + "T00:00:00");
-        return d.toLocaleDateString("de-DE", {
-          weekday: "short",
-          day: "2-digit",
-          month: "2-digit",
-        });
+      function formatDate(ds) {
+        const d = new Date(ds + "T00:00:00");
+        return d
+          .toLocaleDateString("de-DE", {
+            weekday: "short",
+            day: "2-digit",
+            month: "2-digit",
+          })
+          .toUpperCase();
       }
-
       function getRisk(pct) {
         if (pct <= 3)
           return {
-            label: "Grün",
+            label: "GRÜN",
             color: "#15803d",
             bg: "#f0fdf4",
-            border: "#bbf7d0",
-            desc: "Sicher & manageable",
+            desc: "Sicher & manageable — kein Problem.",
           };
         if (pct <= 6)
           return {
-            label: "Gelb",
+            label: "GELB",
             color: "#92400e",
             bg: "#fffbeb",
-            border: "#fde68a",
-            desc: "Machbar, aber sorgfältig planen",
+            desc: "Machbar, aber sorgfältig planen.",
           };
         if (pct <= 10)
           return {
-            label: "Orange",
+            label: "ORANGE",
             color: "#c2410c",
             bg: "#fff7ed",
-            border: "#fed7aa",
-            desc: "Aggressiv – Erfahrung nötig",
+            desc: "Aggressiv — Erfahrung & Disziplin nötig.",
           };
         return {
-          label: "Rot",
+          label: "ROT",
           color: "#b91c1c",
           bg: "#fef2f2",
-          border: "#fecaca",
-          desc: "Gefährlich – ärztliche Begleitung empfohlen",
+          desc: "Gefährlich — ärztliche Begleitung empfohlen.",
         };
       }
-
-      function statCard(label, value, color) {
+      function sc(label, value, color) {
         return `<div class="stat-card">
     <div class="stat-label">${label}</div>
     <div class="stat-value" style="color:${color}">${value}</div>
