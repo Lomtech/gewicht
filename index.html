@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weight Cut Planner</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #f5f2ee;
+        --surface: #ffffff;
+        --surface2: #f0ece6;
+        --border: #e2ddd7;
+        --text: #1a1612;
+        --text2: #6b6259;
+        --accent: #7c3aed;
+        --accent-light: #ede9fe;
+        --green: #15803d;
+        --green-bg: #f0fdf4;
+        --yellow: #92400e;
+        --yellow-bg: #fffbeb;
+        --orange: #c2410c;
+        --orange-bg: #fff7ed;
+        --red: #b91c1c;
+        --red-bg: #fef2f2;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
+        --radius: 12px;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      /* HEADER */
+      .header {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 28px 24px;
+        text-align: center;
+      }
+      .header-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text2);
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      .header h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(28px, 6vw, 44px);
+        font-weight: 400;
+        line-height: 1.1;
+        color: var(--text);
+      }
+      .header h1 span {
+        color: var(--accent);
+        font-style: italic;
+      }
+      .header-sub {
+        color: var(--text2);
+        font-size: 14px;
+        margin-top: 10px;
+        font-weight: 300;
+      }
+
+      /* LAYOUT */
+      .container {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 0 16px 80px;
+      }
+
+      /* CARD */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px;
+        margin-top: 24px;
+        box-shadow: var(--shadow);
+      }
+      .card-title {
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 22px;
+      }
+
+      /* FORM GRID */
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 18px;
+      }
+      .form-group label {
+        display: block;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text2);
+        font-weight: 500;
+        margin-bottom: 7px;
+      }
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 13px;
+        color: var(--text);
+        font-size: 14px;
+        font-family: "DM Sans", sans-serif;
+        outline: none;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+        appearance: none;
+      }
+      .form-group input:focus,
+      .form-group select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        background: #fff;
+      }
+
+      /* BUTTON */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-size: 14px;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          transform 0.1s;
+        margin-top: 22px;
+      }
+      .btn:hover {
+        background: #6d28d9;
+        transform: translateY(-1px);
+      }
+      .btn:active {
+        transform: translateY(0);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--accent);
+        border: 1.5px solid var(--accent);
+      }
+      .btn-outline:hover {
+        background: var(--accent-light);
+      }
+
+      /* STAT CARDS */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 14px;
+        margin-top: 24px;
+      }
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 18px 16px;
+        box-shadow: var(--shadow);
+      }
+      .stat-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text2);
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      .stat-value {
+        font-family: "DM Serif Display", serif;
+        font-size: 28px;
+        line-height: 1;
+      }
+      .stat-unit {
+        font-size: 12px;
+        font-family: "DM Sans", sans-serif;
+        color: var(--text2);
+        font-weight: 400;
+      }
+
+      /* RISK BANNER */
+      .risk-banner {
+        border-radius: var(--radius);
+        padding: 16px 20px;
+        margin-top: 16px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 14px;
+      }
+      .risk-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .risk-label {
+        font-weight: 600;
+      }
+      .risk-desc {
+        color: var(--text2);
+        margin-top: 2px;
+        font-size: 13px;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        margin-top: 8px;
+      }
+      .day-row {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 18px;
+        margin-bottom: 8px;
+        transition: box-shadow 0.15s;
+      }
+      .day-row:hover {
+        box-shadow: var(--shadow);
+      }
+      .day-row.today {
+        border-color: var(--accent);
+        background: var(--accent-light);
+      }
+      .day-date {
+        min-width: 72px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .day-date-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text2);
+        font-weight: 500;
+      }
+      .day-date-weight {
+        font-family: "DM Serif Display", serif;
+        font-size: 22px;
+        line-height: 1.1;
+        margin-top: 2px;
+      }
+      .day-date-unit {
+        font-size: 11px;
+        color: var(--text2);
+        font-family: "DM Sans", sans-serif;
+      }
+      .day-content {
+        flex: 1;
+      }
+      .day-phase-name {
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .day-tips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .tip-tag {
+        font-size: 11px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        padding: 3px 8px;
+        color: var(--text2);
+        font-weight: 400;
+      }
+
+      /* PHASE LEGEND */
+      .phase-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .phase-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border-radius: 6px;
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 500;
+        border: 1px solid transparent;
+      }
+
+      /* REHYDRATION BOX */
+      .rehyd-box {
+        background: var(--green-bg);
+        border: 1px solid #bbf7d0;
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-top: 10px;
+      }
+      .rehyd-title {
+        font-weight: 600;
+        color: var(--green);
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .rehyd-list {
+        list-style: none;
+      }
+      .rehyd-list li {
+        font-size: 13px;
+        color: #166534;
+        padding: 3px 0;
+      }
+      .rehyd-list li::before {
+        content: "✓  ";
+        font-weight: 700;
+      }
+
+      /* WARNING BOX */
+      .warn-box {
+        background: var(--orange-bg);
+        border: 1px solid #fed7aa;
+        border-radius: var(--radius);
+        padding: 14px 18px;
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--orange);
+      }
+
+      /* WEIGHT LOG */
+      .log-entry {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 13px;
+      }
+      .log-entry:last-child {
+        border-bottom: none;
+      }
+      .log-date {
+        color: var(--text2);
+      }
+      .log-weight {
+        font-weight: 600;
+        font-size: 15px;
+      }
+      .log-diff-pos {
+        color: var(--red);
+        font-size: 12px;
+      }
+      .log-diff-neg {
+        color: var(--green);
+        font-size: 12px;
+      }
+
+      /* DELETE BTN */
+      .btn-delete {
+        background: none;
+        border: none;
+        color: #ccc;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        transition:
+          color 0.15s,
+          background 0.15s;
+      }
+      .btn-delete:hover {
+        color: var(--red);
+        background: var(--red-bg);
+      }
+
+      /* EMPTY STATE */
+      .empty {
+        text-align: center;
+        padding: 50px 20px;
+        color: var(--text2);
+        font-size: 14px;
+      }
+      .empty-icon {
+        font-size: 36px;
+        margin-bottom: 12px;
+      }
+
+      /* DISCLAIMER */
+      .disclaimer {
+        border-top: 1px solid var(--border);
+        margin-top: 48px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 11px;
+        color: #bbb;
+        line-height: 1.8;
+      }
+
+      /* TABS */
+      .tabs {
+        display: flex;
+        gap: 4px;
+        background: var(--surface2);
+        border-radius: 10px;
+        padding: 4px;
+        margin-top: 24px;
+        border: 1px solid var(--border);
+      }
+      .tab-btn {
+        flex: 1;
+        background: none;
+        border: none;
+        border-radius: 7px;
+        padding: 9px 12px;
+        font-size: 13px;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 500;
+        color: var(--text2);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .tab-btn.active {
+        background: var(--surface);
+        color: var(--accent);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+
+      /* LOG INPUT ROW */
+      .log-input-row {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+        margin-bottom: 20px;
+      }
+      .log-input-row .form-group {
+        flex: 1;
+        margin: 0;
+      }
+      .log-input-row .btn {
+        margin-top: 0;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 500px) {
+        .card {
+          padding: 20px 16px;
+        }
+        .day-row {
+          flex-direction: column;
+        }
+        .day-date {
+          text-align: left;
+          min-width: unset;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-eyebrow">Combat Sports</div>
+      <h1>Weight Cut <span>Planner</span></h1>
+      <p class="header-sub">
+        Professionelle Gewichtsplanung — alles lokal im Browser gespeichert.
+      </p>
+    </div>
+
+    <div class="container">
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('planner')">
+          ⚖️ Planner
+        </button>
+        <button class="tab-btn" onclick="switchTab('log')">
+          📊 Gewichtstagebuch
+        </button>
+      </div>
+
+      <!-- TAB: PLANNER -->
+      <div id="tab-planner" class="tab-content active">
+        <div class="card">
+          <div class="card-title">Deine Daten</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Sportart</label>
+              <select id="sport" onchange="onSportChange()">
+                <option>BJJ / Grappling</option>
+                <option>MMA</option>
+                <option>Boxing</option>
+                <option>Wrestling</option>
+                <option>Kickboxing / Muay Thai</option>
+                <option>Judo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Gewichtsklasse</label>
+              <select id="weightClass" onchange="saveForm()"></select>
+            </div>
+            <div class="form-group">
+              <label>Eigenes Limit (kg)</label>
+              <input
+                type="number"
+                id="customLimit"
+                placeholder="z.B. 77.1"
+                step="0.1"
+                oninput="saveForm()"
+              />
+            </div>
+            <div class="form-group">
+              <label>Aktuelles Gewicht (kg)</label>
+              <input
+                type="number"
+                id="currentWeight"
+                placeholder="z.B. 84.5"
+                step="0.1"
+                oninput="saveForm()"
+              />
+            </div>
+            <div class="form-group">
+              <label>Wettkampftag</label>
+              <input type="date" id="fightDate" oninput="saveForm()" />
+            </div>
+            <div class="form-group">
+              <label>Wiegemodus</label>
+              <select id="weighInType" onchange="saveForm()">
+                <option value="day_before">Tag vorher wiegen</option>
+                <option value="same_day">Am Kampftag wiegen</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Erfahrung</label>
+              <select id="experience" onchange="saveForm()">
+                <option value="beginner">Anfänger (erster Cut)</option>
+                <option value="intermediate">Intermediate (1–5 Cuts)</option>
+                <option value="advanced">Erfahren (regelmäßig)</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn" onclick="calculate()">Plan berechnen →</button>
+        </div>
+
+        <div id="results"></div>
+      </div>
+
+      <!-- TAB: LOG -->
+      <div id="tab-log" class="tab-content">
+        <div class="card">
+          <div class="card-title">Gewicht eintragen</div>
+          <div class="log-input-row">
+            <div class="form-group">
+              <label>Datum</label>
+              <input type="date" id="logDate" />
+            </div>
+            <div class="form-group">
+              <label>Gewicht (kg)</label>
+              <input
+                type="number"
+                id="logWeight"
+                placeholder="z.B. 83.2"
+                step="0.1"
+              />
+            </div>
+            <button class="btn" onclick="addLogEntry()">Eintragen</button>
+          </div>
+          <div id="logList"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ─── DATA ───────────────────────────────────────────────────────────
+      const WEIGHT_CLASSES = {
+        "BJJ / Grappling": [
+          { name: "Rooster (-57,5 kg)", limit: 57.5 },
+          { name: "Light-Feather (-64 kg)", limit: 64 },
+          { name: "Feather (-70 kg)", limit: 70 },
+          { name: "Light (-76 kg)", limit: 76 },
+          { name: "Middle (-82,3 kg)", limit: 82.3 },
+          { name: "Medium-Heavy (-88,3 kg)", limit: 88.3 },
+          { name: "Heavy (-94,3 kg)", limit: 94.3 },
+          { name: "Super-Heavy (-100,5 kg)", limit: 100.5 },
+          { name: "Ultra-Heavy (+100,5 kg)", limit: 999 },
+        ],
+        MMA: [
+          { name: "Strawweight (-52,2 kg)", limit: 52.2 },
+          { name: "Flyweight (-56,7 kg)", limit: 56.7 },
+          { name: "Bantamweight (-61,2 kg)", limit: 61.2 },
+          { name: "Featherweight (-65,8 kg)", limit: 65.8 },
+          { name: "Lightweight (-70,3 kg)", limit: 70.3 },
+          { name: "Welterweight (-77,1 kg)", limit: 77.1 },
+          { name: "Middleweight (-83,9 kg)", limit: 83.9 },
+          { name: "Light Heavyweight (-93 kg)", limit: 93 },
+          { name: "Heavyweight (-120 kg)", limit: 120.2 },
+        ],
+        Boxing: [
+          { name: "Flyweight (-51 kg)", limit: 51 },
+          { name: "Featherweight (-57 kg)", limit: 57 },
+          { name: "Lightweight (-61 kg)", limit: 61 },
+          { name: "Welterweight (-67 kg)", limit: 67 },
+          { name: "Middleweight (-73 kg)", limit: 73 },
+          { name: "Light Heavyweight (-79 kg)", limit: 79 },
+          { name: "Cruiserweight (-90,7 kg)", limit: 90.7 },
+          { name: "Heavyweight (+90,7 kg)", limit: 999 },
+        ],
+        Wrestling: [
+          { name: "57 kg", limit: 57 },
+          { name: "65 kg", limit: 65 },
+          { name: "74 kg", limit: 74 },
+          { name: "86 kg", limit: 86 },
+          { name: "97 kg", limit: 97 },
+          { name: "125 kg", limit: 125 },
+        ],
+        "Kickboxing / Muay Thai": [
+          { name: "60 kg", limit: 60 },
+          { name: "67 kg", limit: 67 },
+          { name: "71 kg", limit: 71 },
+          { name: "75 kg", limit: 75 },
+          { name: "81 kg", limit: 81 },
+          { name: "86 kg", limit: 86 },
+          { name: "91 kg", limit: 91 },
+          { name: "+91 kg", limit: 999 },
+        ],
+        Judo: [
+          { name: "60 kg", limit: 60 },
+          { name: "66 kg", limit: 66 },
+          { name: "73 kg", limit: 73 },
+          { name: "81 kg", limit: 81 },
+          { name: "90 kg", limit: 90 },
+          { name: "100 kg", limit: 100 },
+          { name: "+100 kg", limit: 999 },
+        ],
+      };
+
+      const PHASES = {
+        clean: {
+          name: "Clean Eating",
+          icon: "🥗",
+          color: "#7c3aed",
+          bg: "#ede9fe",
+          border: "#c4b5fd",
+        },
+        lowcarb: {
+          name: "Low-Carb Phase",
+          icon: "🍗",
+          color: "#0369a1",
+          bg: "#e0f2fe",
+          border: "#7dd3fc",
+        },
+        sodium: {
+          name: "Natriumreduktion",
+          icon: "🧂",
+          color: "#d97706",
+          bg: "#fef3c7",
+          border: "#fcd34d",
+        },
+        water: {
+          name: "Wasserladung → Cut",
+          icon: "💧",
+          color: "#0891b2",
+          bg: "#cffafe",
+          border: "#67e8f9",
+        },
+        cut: {
+          name: "Aktiver Watercut",
+          icon: "🔥",
+          color: "#dc2626",
+          bg: "#fee2e2",
+          border: "#fca5a5",
+        },
+      };
+
+      // ─── INIT ────────────────────────────────────────────────────────────
+      window.addEventListener("DOMContentLoaded", () => {
+        populateWeightClasses();
+        loadForm();
+        renderLogList();
+        // set today as default log date
+        document.getElementById("logDate").value = today();
+      });
+
+      function today() {
+        return new Date().toISOString().split("T")[0];
+      }
+
+      function switchTab(tab) {
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((c) => c.classList.remove("active"));
+        document.getElementById("tab-" + tab).classList.add("active");
+        event.target.classList.add("active");
+      }
+
+      // ─── WEIGHT CLASSES ──────────────────────────────────────────────────
+      function populateWeightClasses(sport) {
+        const s = sport || document.getElementById("sport").value;
+        const sel = document.getElementById("weightClass");
+        const prev = sel.value;
+        sel.innerHTML = '<option value="">— Auswählen —</option>';
+        (WEIGHT_CLASSES[s] || []).forEach((w) => {
+          const o = document.createElement("option");
+          o.value = w.name;
+          o.textContent = w.name;
+          sel.appendChild(o);
+        });
+        if (prev) sel.value = prev;
+      }
+
+      function onSportChange() {
+        populateWeightClasses();
+        saveForm();
+      }
+
+      // ─── LOCALSTORAGE: FORM ──────────────────────────────────────────────
+      function saveForm() {
+        const data = {
+          sport: document.getElementById("sport").value,
+          weightClass: document.getElementById("weightClass").value,
+          customLimit: document.getElementById("customLimit").value,
+          currentWeight: document.getElementById("currentWeight").value,
+          fightDate: document.getElementById("fightDate").value,
+          weighInType: document.getElementById("weighInType").value,
+          experience: document.getElementById("experience").value,
+        };
+        localStorage.setItem("wcp_form", JSON.stringify(data));
+      }
+
+      function loadForm() {
+        const raw = localStorage.getItem("wcp_form");
+        if (!raw) return;
+        const d = JSON.parse(raw);
+        if (d.sport) {
+          document.getElementById("sport").value = d.sport;
+          populateWeightClasses(d.sport);
+        }
+        if (d.weightClass)
+          document.getElementById("weightClass").value = d.weightClass;
+        if (d.customLimit)
+          document.getElementById("customLimit").value = d.customLimit;
+        if (d.currentWeight)
+          document.getElementById("currentWeight").value = d.currentWeight;
+        if (d.fightDate)
+          document.getElementById("fightDate").value = d.fightDate;
+        if (d.weighInType)
+          document.getElementById("weighInType").value = d.weighInType;
+        if (d.experience)
+          document.getElementById("experience").value = d.experience;
+        if (d.currentWeight && d.fightDate) calculate();
+      }
+
+      // ─── LOCALSTORAGE: LOG ───────────────────────────────────────────────
+      function getLog() {
+        return JSON.parse(localStorage.getItem("wcp_log") || "[]");
+      }
+      function saveLog(log) {
+        localStorage.setItem("wcp_log", JSON.stringify(log));
+      }
+
+      function addLogEntry() {
+        const date = document.getElementById("logDate").value;
+        const weight = parseFloat(document.getElementById("logWeight").value);
+        if (!date || isNaN(weight))
+          return alert("Bitte Datum und Gewicht eingeben.");
+        const log = getLog();
+        const existing = log.findIndex((e) => e.date === date);
+        if (existing >= 0) log[existing].weight = weight;
+        else log.push({ date, weight });
+        log.sort((a, b) => b.date.localeCompare(a.date));
+        saveLog(log);
+        document.getElementById("logWeight").value = "";
+        renderLogList();
+      }
+
+      function deleteLogEntry(date) {
+        const log = getLog().filter((e) => e.date !== date);
+        saveLog(log);
+        renderLogList();
+      }
+
+      function renderLogList() {
+        const log = getLog();
+        const el = document.getElementById("logList");
+        if (!log.length) {
+          el.innerHTML =
+            '<div class="empty"><div class="empty-icon">📋</div>Noch keine Einträge. Trag dein Gewicht täglich ein!</div>';
+          return;
+        }
+        el.innerHTML = log
+          .map((entry, i) => {
+            const prev = log[i + 1];
+            let diffHtml = "";
+            if (prev) {
+              const diff = entry.weight - prev.weight;
+              const sign = diff > 0 ? "+" : "";
+              diffHtml = `<span class="${diff > 0 ? "log-diff-pos" : "log-diff-neg"}">${sign}${diff.toFixed(1)} kg</span>`;
+            }
+            return `
+      <div class="log-entry">
+        <span class="log-date">${formatDate(entry.date)}</span>
+        <span style="display:flex;align-items:center;gap:12px">
+          ${diffHtml}
+          <span class="log-weight">${entry.weight.toFixed(1)} kg</span>
+          <button class="btn-delete" onclick="deleteLogEntry('${entry.date}')" title="Löschen">×</button>
+        </span>
+      </div>`;
+          })
+          .join("");
+      }
+
+      // ─── CALCULATE ───────────────────────────────────────────────────────
+      function calculate() {
+        saveForm();
+        const cw = parseFloat(document.getElementById("currentWeight").value);
+        const fightDate = document.getElementById("fightDate").value;
+        const customLimit = parseFloat(
+          document.getElementById("customLimit").value,
+        );
+        const weightClass = document.getElementById("weightClass").value;
+        const sport = document.getElementById("sport").value;
+        const weighInType = document.getElementById("weighInType").value;
+        const experience = document.getElementById("experience").value;
+
+        let weightLimit = customLimit || null;
+        if (!weightLimit && weightClass) {
+          const wc = (WEIGHT_CLASSES[sport] || []).find(
+            (w) => w.name === weightClass,
+          );
+          if (wc) weightLimit = wc.limit;
+        }
+
+        const resultsEl = document.getElementById("results");
+
+        if (!cw || !weightLimit || !fightDate) {
+          resultsEl.innerHTML =
+            '<div class="empty"><div class="empty-icon">⚖️</div>Bitte Gewicht, Gewichtsklasse und Wettkampfdatum eingeben.</div>';
+          return;
+        }
+
+        const todayStr = today();
+        const daysUntil = daysBetween(todayStr, fightDate);
+        if (daysUntil < 0) {
+          resultsEl.innerHTML =
+            '<div class="empty"><div class="empty-icon">📅</div>Das Wettkampfdatum liegt in der Vergangenheit.</div>';
+          return;
+        }
+
+        const tocut = cw - weightLimit;
+        const pct = tocut > 0 ? (tocut / cw) * 100 : 0;
+        const risk = getRisk(pct);
+        const rehydHours = weighInType === "day_before" ? 20 : 2;
+
+        const schedule = buildSchedule(
+          cw,
+          weightLimit,
+          tocut,
+          daysUntil,
+          fightDate,
+          todayStr,
+          weighInType,
+        );
+
+        let html = "";
+
+        // Stat Cards
+        html += `<div class="stats-grid">
+    ${statCard("Zu schneiden", tocut > 0 ? tocut.toFixed(1) + " kg" : "0 kg", risk.color)}
+    ${statCard("% Körpergewicht", pct.toFixed(1) + "%", risk.color)}
+    ${statCard("Tage bis Kampf", daysUntil, "#7c3aed")}
+    ${statCard("Rehydration-Fenster", "~" + rehydHours + "h", "#15803d")}
+  </div>`;
+
+        // Risk Banner
+        html += `<div class="risk-banner" style="background:${risk.bg};border:1px solid ${risk.border}">
+    <div class="risk-dot" style="background:${risk.color}"></div>
+    <div>
+      <div class="risk-label" style="color:${risk.color}">${risk.label}: ${risk.desc}</div>
+      ${tocut <= 0 ? '<div class="risk-desc">Du bist bereits unter dem Limit — kein aktiver Cut nötig.</div>' : ""}
+      ${experience === "beginner" && pct > 5 ? '<div class="risk-desc" style="color:#c2410c;margin-top:4px">⚠️ Als Anfänger empfehlen wir bei diesem Cut unbedingt einen erfahrenen Coach.</div>' : ""}
+    </div>
+  </div>`;
+
+        // Same-day warning
+        if (weighInType === "same_day" && tocut > 3) {
+          html += `<div class="warn-box">⚠️ <strong>Same-Day Wiegen:</strong> Bei mehr als 3 kg Cut mit nur ~2h Rehydration ist das medizinisch riskant. Erwäge die nächsthöhere Gewichtsklasse.</div>`;
+        }
+
+        // Timeline
+        if (schedule.length > 0) {
+          html += `<div class="card" style="margin-top:24px">
+      <div class="card-title">Dein Cut-Plan — Tag für Tag</div>`;
+
+          // Legend
+          html += `<div class="phase-legend">`;
+          Object.values(PHASES).forEach((p) => {
+            html += `<div class="phase-pill" style="background:${p.bg};border-color:${p.border};color:${p.color}">${p.icon} ${p.name}</div>`;
+          });
+          html += `</div><div class="timeline">`;
+
+          schedule.forEach((day) => {
+            const p = PHASES[day.phase];
+            const isToday = day.date === todayStr;
+            const label =
+              day.daysLeft === 1
+                ? weighInType === "day_before"
+                  ? "🏁 WIEGEN"
+                  : "🥊 KAMPF"
+                : isToday
+                  ? "📍 HEUTE"
+                  : formatDate(day.date);
+
+            html += `<div class="day-row${isToday ? " today" : ""}">
+        <div class="day-date">
+          <div class="day-date-label">${label}</div>
+          <div class="day-date-weight" style="color:${p.color}">${day.target.toFixed(1)}<span class="day-date-unit"> kg</span></div>
+        </div>
+        <div class="day-content">
+          <div class="day-phase-name" style="color:${p.color}">${p.icon} ${p.name}</div>
+          <div class="day-tips">
+            ${day.tips.map((t) => `<span class="tip-tag">${t}</span>`).join("")}
+          </div>
+        </div>
+      </div>`;
+          });
+
+          html += `</div>`;
+
+          // Rehydration
+          const isAdv = weighInType === "day_before";
+          html += `<div class="rehyd-box" style="margin-top:12px">
+      <div class="rehyd-title">🏆 Nach dem Wiegen — Rehydration (~${rehydHours}h)</div>
+      <ul class="rehyd-list">
+        ${
+          isAdv
+            ? `
+          <li>Sofort: 500ml Elektrolytgetränk + leichter Snack</li>
+          <li>Erste 4h: 1–2L langsam trinken (nicht saufen!)</li>
+          <li>Leichte Carbs: Banane, Reis, Toast</li>
+          <li>Schlafen: Körper regeneriert nachts enorm</li>
+          <li>Kampftag Morgen: Normales Frühstück, 500ml Wasser</li>
+          <li>Vor dem Kampf: Kleiner Snack 1–2h vorher</li>
+        `
+            : `
+          <li>Sofort nach Wiegen: Elektrolyte + schnelle Carbs</li>
+          <li>Alle 15min: 150–200ml (nicht auf einmal schlucken)</li>
+          <li>Banane, Datteln, Weißbrot — leicht verdaulich</li>
+          <li>Kein schweres Essen direkt vor dem Kampf</li>
+        `
+        }
+      </ul>
+    </div>`;
+
+          html += `</div>`;
+        }
+
+        html += `<div class="disclaimer">Diese App ersetzt keine medizinische oder sportliche Fachberatung.<br>Aggressive Weight Cuts können gesundheitliche Risiken darstellen. Konsultiere bei Unsicherheiten einen erfahrenen Coach oder Sportarzt.</div>`;
+
+        resultsEl.innerHTML = html;
+      }
+
+      // ─── SCHEDULE BUILDER ────────────────────────────────────────────────
+      function buildSchedule(
+        cw,
+        limit,
+        tocut,
+        daysUntil,
+        fightDate,
+        todayStr,
+        weighInType,
+      ) {
+        if (daysUntil < 1) return [];
+        const schedule = [];
+
+        for (let i = 0; i < daysUntil; i++) {
+          const d = new Date(fightDate);
+          d.setDate(d.getDate() - (daysUntil - i));
+          const dateStr = d.toISOString().split("T")[0];
+          const daysLeft = daysUntil - i;
+
+          let phase, target, tips;
+
+          if (daysLeft > 7) {
+            phase = "clean";
+            const dailyLoss = Math.min(0.3, tocut / daysUntil);
+            target = cw - i * dailyLoss;
+            tips = [
+              "Normales Training",
+              "Kein Junk-Food",
+              "Wenig Salz",
+              "2–3L Wasser/Tag",
+              "Ausreichend Schlaf",
+            ];
+          } else if (daysLeft > 4) {
+            phase = "lowcarb";
+            target = limit + tocut * 0.5 - (7 - daysLeft) * 0.1;
+            tips = [
+              "Max. 50g Carbs/Tag",
+              "Hohe Proteinzufuhr (2g/kg)",
+              "Kein Obst, kein Brot",
+              "Leichtes Training",
+              "Kein Salz kochen",
+            ];
+          } else if (daysLeft > 2) {
+            phase = "sodium";
+            target = limit + tocut * 0.2;
+            tips = [
+              "Null Salz",
+              "Wasserladung: 3–4L/Tag",
+              "Kein verarbeitetes Essen",
+              "Sauna optional",
+              "Low-Carb weiter",
+            ];
+          } else if (daysLeft === 2) {
+            phase = "water";
+            target = limit + tocut * 0.07;
+            tips = [
+              "Vormittag: 2–3L trinken",
+              "Nachmittag: Wasser stark drosseln",
+              "Salzfreies Abendessen",
+              "Warmes Bad / Sauna",
+              "Danach: minimal Wasser",
+            ];
+          } else {
+            phase = "cut";
+            target = limit;
+            tips = [
+              "Kein Essen, kein Trinken",
+              "Sauna / Trainingsanzug",
+              "Körper aktiv halten",
+              "Mentale Stärke!",
+              "Danach sofort rehydrieren",
+            ];
+          }
+
+          schedule.push({
+            date: dateStr,
+            daysLeft,
+            phase,
+            target: Math.max(limit, target),
+            tips,
+          });
+        }
+        return schedule;
+      }
+
+      // ─── HELPERS ─────────────────────────────────────────────────────────
+      function daysBetween(d1, d2) {
+        return Math.ceil((new Date(d2) - new Date(d1)) / 86400000);
+      }
+
+      function formatDate(dateStr) {
+        const d = new Date(dateStr + "T00:00:00");
+        return d.toLocaleDateString("de-DE", {
+          weekday: "short",
+          day: "2-digit",
+          month: "2-digit",
+        });
+      }
+
+      function getRisk(pct) {
+        if (pct <= 3)
+          return {
+            label: "Grün",
+            color: "#15803d",
+            bg: "#f0fdf4",
+            border: "#bbf7d0",
+            desc: "Sicher & manageable",
+          };
+        if (pct <= 6)
+          return {
+            label: "Gelb",
+            color: "#92400e",
+            bg: "#fffbeb",
+            border: "#fde68a",
+            desc: "Machbar, aber sorgfältig planen",
+          };
+        if (pct <= 10)
+          return {
+            label: "Orange",
+            color: "#c2410c",
+            bg: "#fff7ed",
+            border: "#fed7aa",
+            desc: "Aggressiv – Erfahrung nötig",
+          };
+        return {
+          label: "Rot",
+          color: "#b91c1c",
+          bg: "#fef2f2",
+          border: "#fecaca",
+          desc: "Gefährlich – ärztliche Begleitung empfohlen",
+        };
+      }
+
+      function statCard(label, value, color) {
+        return `<div class="stat-card">
+    <div class="stat-label">${label}</div>
+    <div class="stat-value" style="color:${color}">${value}</div>
+  </div>`;
+      }
+    </script>
+  </body>
+</html>
