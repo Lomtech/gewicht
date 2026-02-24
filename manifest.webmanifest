@@ -1,0 +1,25 @@
+{
+  "name": "Weight Cut Planner",
+  "short_name": "Weight Cut",
+  "description": "Weight-Cut Planung fuer Kampfsport mit Tageslog.",
+  "start_url": "./weight-cut-planner.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2ede6",
+  "theme_color": "#1a1410",
+  "icons": [
+    {
+      "src": "./icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
