@@ -1,7 +1,7 @@
-const CACHE_NAME = "weight-cut-planner-v1";
+const CACHE_NAME = "weight-cut-planner-v3";
 const ASSETS = [
   "./",
-  "./weight-cut-planner.html",
+  "./index.html",
   "./manifest.webmanifest",
   "./icon-192.svg",
   "./icon-512.svg"
@@ -38,7 +38,7 @@ self.addEventListener("fetch", (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
           return response;
         })
-        .catch(() => caches.match("./weight-cut-planner.html"));
+        .catch(() => caches.match("./index.html"));
     })
   );
 });
