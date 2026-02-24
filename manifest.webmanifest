@@ -2,7 +2,7 @@
   "name": "Weight Cut Planner",
   "short_name": "Weight Cut",
   "description": "Weight-Cut Planung fuer Kampfsport mit Tageslog.",
-  "start_url": "./weight-cut-planner.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
