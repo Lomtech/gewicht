@@ -9,7 +9,10 @@
     <meta name="theme-color" content="#1a1410" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="Weight Cut" />
     <link rel="manifest" href="./manifest.webmanifest" />
     <title>WEIGHT CUT PLANNER</title>
@@ -59,12 +62,21 @@
         );
         touch-action: manipulation;
       }
+      html,
+      body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
       button,
       input,
       select,
       .btn,
       .btn-small {
         touch-action: manipulation;
+      }
+      * {
+        min-width: 0;
       }
 
       .header {
@@ -148,6 +160,35 @@
         margin-bottom: 20px;
       }
 
+      .tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 18px;
+      }
+      .tab-btn {
+        border: 2px solid var(--ink);
+        background: var(--white);
+        color: var(--ink2);
+        padding: 10px 12px;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .tab-btn.active {
+        background: var(--ink);
+        color: var(--white);
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+
       .form-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
@@ -190,15 +231,22 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        -webkit-appearance: none;
-        appearance: none;
+        -webkit-appearance: textfield;
+        appearance: textfield;
         padding-right: 10px;
+        font-size: 16px;
+        width: -webkit-fill-available;
       }
       .form-group input[type="date"]::-webkit-date-and-time-value {
         text-align: left;
       }
       .form-group input[type="date"]::-webkit-calendar-picker-indicator {
         margin: 0;
+        padding: 0;
+      }
+      .form-group input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+      .form-group input[type="date"]::-webkit-datetime-edit {
+        padding: 0;
       }
       input,
       select,
@@ -368,7 +416,7 @@
 
       .log-row {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         gap: 10px;
         align-items: end;
         margin-bottom: 14px;
@@ -381,6 +429,8 @@
       .log-row .btn {
         margin-top: 0;
         white-space: nowrap;
+        grid-column: 1 / -1;
+        width: 100%;
       }
       .log-list {
         border-top: 1px solid var(--border);
@@ -429,10 +479,6 @@
         .log-row {
           grid-template-columns: 1fr 1fr;
         }
-        .log-row .btn {
-          grid-column: 1 / -1;
-          width: 100%;
-        }
         .stats-grid {
           grid-template-columns: 1fr 1fr;
         }
@@ -467,6 +513,13 @@
         .btn {
           width: 100%;
           padding: 12px 16px;
+        }
+        .tabs {
+          position: sticky;
+          top: 0;
+          z-index: 20;
+          background: var(--cream);
+          padding-top: 8px;
         }
         .log-row {
           grid-template-columns: 1fr;
@@ -533,73 +586,110 @@
     </div>
 
     <div class="container">
-      <div class="card">
-        <div class="card-title">Eingabe</div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Sportart</label>
-            <select id="sport" onchange="onSportChange()">
-              <option>BJJ / Grappling</option>
-              <option>MMA</option>
-              <option>Boxing</option>
-              <option>Wrestling</option>
-              <option>Kickboxing / Muay Thai</option>
-              <option>Judo</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Gewichtsklasse</label>
-            <select id="weightClass"></select>
-          </div>
-          <div class="form-group">
-            <label>Eigenes Limit (kg, optional)</label>
-            <input type="number" id="customLimit" placeholder="z.B. 77.1" step="0.1" />
-            <div class="field-help">Überschreibt die gewählte Gewichtsklasse, falls dein Turnier ein abweichendes Limit hat.</div>
-          </div>
-          <div class="form-group">
-            <label>Aktuelles Gewicht (kg)</label>
-            <input type="number" id="currentWeight" placeholder="z.B. 84.5" step="0.1" />
-          </div>
-          <div class="form-group">
-            <label>Wettkampfdatum</label>
-            <input type="date" id="fightDate" />
-          </div>
-          <div class="form-group">
-            <label>Wiegemodus</label>
-            <select id="weighInType">
-              <option value="day_before">Tag vorher wiegen</option>
-              <option value="same_day">Am Kampftag wiegen</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Erfahrung</label>
-            <select id="experience">
-              <option value="beginner">Anfänger (ca. 0 bis 5 Weight Cuts)</option>
-              <option value="intermediate" selected>Intermediate (ca. 6 bis 10 Weight Cuts)</option>
-              <option value="advanced">Erfahren (über 10 Weight Cuts)</option>
-            </select>
-          </div>
-        </div>
-        <button class="btn" onclick="calculate()">Plan berechnen</button>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('planner', this)">
+          Plan
+        </button>
+        <button class="tab-btn" onclick="switchTab('log', this)">
+          Tagebuch
+        </button>
       </div>
 
-      <div class="card">
-        <div class="card-title">Gewichtstagebuch (Browser gespeichert)</div>
-        <div class="log-row">
-          <div class="form-group">
-            <label>Datum</label>
-            <input type="date" id="logDate" />
+      <div id="tab-planner" class="tab-content active">
+        <div class="card">
+          <div class="card-title">Eingabe</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Sportart</label>
+              <select id="sport" onchange="onSportChange()">
+                <option>BJJ / Grappling</option>
+                <option>MMA</option>
+                <option>Boxing</option>
+                <option>Wrestling</option>
+                <option>Kickboxing / Muay Thai</option>
+                <option>Judo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Gewichtsklasse</label>
+              <select id="weightClass"></select>
+            </div>
+            <div class="form-group">
+              <label>Eigenes Limit (kg, optional)</label>
+              <input
+                type="number"
+                id="customLimit"
+                placeholder="z.B. 77.1"
+                step="0.1"
+              />
+              <div class="field-help">
+                Überschreibt die gewählte Gewichtsklasse, falls dein Turnier ein
+                abweichendes Limit hat.
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Aktuelles Gewicht (kg)</label>
+              <input
+                type="number"
+                id="currentWeight"
+                placeholder="z.B. 84.5"
+                step="0.1"
+              />
+            </div>
+            <div class="form-group">
+              <label>Wettkampfdatum</label>
+              <input type="date" id="fightDate" />
+            </div>
+            <div class="form-group">
+              <label>Wiegemodus</label>
+              <select id="weighInType">
+                <option value="day_before">Tag vorher wiegen</option>
+                <option value="same_day">Am Kampftag wiegen</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Erfahrung</label>
+              <select id="experience">
+                <option value="beginner">
+                  Anfänger (ca. 0 bis 5 Weight Cuts)
+                </option>
+                <option value="intermediate" selected>
+                  Intermediate (ca. 6 bis 10 Weight Cuts)
+                </option>
+                <option value="advanced">Erfahren (über 10 Weight Cuts)</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Gewicht (kg)</label>
-            <input type="number" id="logWeight" step="0.1" placeholder="z.B. 83.2" />
-          </div>
-          <button class="btn" onclick="saveDailyWeightEntry()">Speichern</button>
+          <button class="btn" onclick="calculate()">Plan berechnen</button>
         </div>
-        <div id="dailyWeightList" class="log-list"></div>
+
+        <div id="results"></div>
       </div>
 
-      <div id="results"></div>
+      <div id="tab-log" class="tab-content">
+        <div class="card">
+          <div class="card-title">Gewichtstagebuch (Browser gespeichert)</div>
+          <div class="log-row">
+            <div class="form-group">
+              <label>Datum</label>
+              <input type="date" id="logDate" />
+            </div>
+            <div class="form-group">
+              <label>Gewicht (kg)</label>
+              <input
+                type="number"
+                id="logWeight"
+                step="0.1"
+                placeholder="z.B. 83.2"
+              />
+            </div>
+            <button class="btn" onclick="saveDailyWeightEntry()">
+              Speichern
+            </button>
+          </div>
+          <div id="dailyWeightList" class="log-list"></div>
+        </div>
+      </div>
     </div>
 
     <script>
@@ -613,7 +703,7 @@
           { name: "Medium-Heavy (-88,3 kg)", limit: 88.3 },
           { name: "Heavy (-94,3 kg)", limit: 94.3 },
           { name: "Super-Heavy (-100,5 kg)", limit: 100.5 },
-          { name: "Ultra-Heavy (+100,5 kg)", limit: 999 }
+          { name: "Ultra-Heavy (+100,5 kg)", limit: 999 },
         ],
         MMA: [
           { name: "Strawweight (-52,2 kg)", limit: 52.2 },
@@ -624,7 +714,7 @@
           { name: "Welterweight (-77,1 kg)", limit: 77.1 },
           { name: "Middleweight (-83,9 kg)", limit: 83.9 },
           { name: "Light Heavyweight (-93 kg)", limit: 93 },
-          { name: "Heavyweight (-120 kg)", limit: 120.2 }
+          { name: "Heavyweight (-120 kg)", limit: 120.2 },
         ],
         Boxing: [
           { name: "Flyweight (-51 kg)", limit: 51 },
@@ -634,7 +724,7 @@
           { name: "Middleweight (-73 kg)", limit: 73 },
           { name: "Light Heavyweight (-79 kg)", limit: 79 },
           { name: "Cruiserweight (-90,7 kg)", limit: 90.7 },
-          { name: "Heavyweight (+90,7 kg)", limit: 999 }
+          { name: "Heavyweight (+90,7 kg)", limit: 999 },
         ],
         Wrestling: [
           { name: "57 kg", limit: 57 },
@@ -642,7 +732,7 @@
           { name: "74 kg", limit: 74 },
           { name: "86 kg", limit: 86 },
           { name: "97 kg", limit: 97 },
-          { name: "125 kg", limit: 125 }
+          { name: "125 kg", limit: 125 },
         ],
         "Kickboxing / Muay Thai": [
           { name: "60 kg", limit: 60 },
@@ -652,7 +742,7 @@
           { name: "81 kg", limit: 81 },
           { name: "86 kg", limit: 86 },
           { name: "91 kg", limit: 91 },
-          { name: "+91 kg", limit: 999 }
+          { name: "+91 kg", limit: 999 },
         ],
         Judo: [
           { name: "60 kg", limit: 60 },
@@ -661,8 +751,8 @@
           { name: "81 kg", limit: 81 },
           { name: "90 kg", limit: 90 },
           { name: "100 kg", limit: 100 },
-          { name: "+100 kg", limit: 999 }
-        ]
+          { name: "+100 kg", limit: 999 },
+        ],
       };
 
       const PHASES = {
@@ -670,27 +760,31 @@
         lowcarb: { name: "Low-Carb Depletion", color: "#7a5c1a" },
         sodium: { name: "Salz-Reduktion", color: "#1a5a7a" },
         water: { name: "Wasserstrategie", color: "#1a6b6b" },
-        cut: { name: "Finaler Cut", color: "#c0281a" }
+        cut: { name: "Finaler Cut", color: "#c0281a" },
       };
 
       const WARNING_THRESHOLDS = {
         same_day: { beginner: 1, intermediate: 3, advanced: 5 },
-        day_before: { beginner: 3, intermediate: 8, advanced: 10 }
+        day_before: { beginner: 3, intermediate: 8, advanced: 10 },
       };
 
       const CALORIE_TARGETS_7D = {
         same_day: { beginner: 1, intermediate: 2, advanced: 4 },
-        day_before: { beginner: 3, intermediate: 6, advanced: 10 }
+        day_before: { beginner: 3, intermediate: 6, advanced: 10 },
       };
 
       window.addEventListener("DOMContentLoaded", () => {
         populateWeightClasses();
-        document.getElementById("weightClass").addEventListener("change", saveForm);
+        document
+          .getElementById("weightClass")
+          .addEventListener("change", saveForm);
         document.querySelectorAll("input, select").forEach((el) => {
           if (el.id !== "weightClass") el.addEventListener("input", saveForm);
         });
         document.getElementById("logDate").value = today();
-        document.getElementById("currentWeight").addEventListener("input", autoSaveCurrentWeightForToday);
+        document
+          .getElementById("currentWeight")
+          .addEventListener("input", autoSaveCurrentWeightForToday);
         loadForm();
         setCurrentWeightFromTodayLog();
         renderDailyWeightList();
@@ -706,7 +800,7 @@
           }
           lastTouchEnd = now;
         },
-        { passive: false }
+        { passive: false },
       );
 
       if ("serviceWorker" in navigator) {
@@ -717,6 +811,17 @@
 
       function today() {
         return new Date().toISOString().split("T")[0];
+      }
+
+      function switchTab(tab, btn) {
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((c) => c.classList.remove("active"));
+        document.getElementById("tab-" + tab).classList.add("active");
+        btn.classList.add("active");
       }
 
       function populateWeightClasses(sport) {
@@ -748,8 +853,8 @@
             currentWeight: document.getElementById("currentWeight").value,
             fightDate: document.getElementById("fightDate").value,
             weighInType: document.getElementById("weighInType").value,
-            experience: document.getElementById("experience").value
-          })
+            experience: document.getElementById("experience").value,
+          }),
         );
       }
 
@@ -761,12 +866,18 @@
           document.getElementById("sport").value = d.sport;
           populateWeightClasses(d.sport);
         }
-        if (d.weightClass) document.getElementById("weightClass").value = d.weightClass;
-        if (d.customLimit) document.getElementById("customLimit").value = d.customLimit;
-        if (d.currentWeight) document.getElementById("currentWeight").value = d.currentWeight;
-        if (d.fightDate) document.getElementById("fightDate").value = d.fightDate;
-        if (d.weighInType) document.getElementById("weighInType").value = d.weighInType;
-        if (d.experience) document.getElementById("experience").value = d.experience;
+        if (d.weightClass)
+          document.getElementById("weightClass").value = d.weightClass;
+        if (d.customLimit)
+          document.getElementById("customLimit").value = d.customLimit;
+        if (d.currentWeight)
+          document.getElementById("currentWeight").value = d.currentWeight;
+        if (d.fightDate)
+          document.getElementById("fightDate").value = d.fightDate;
+        if (d.weighInType)
+          document.getElementById("weighInType").value = d.weighInType;
+        if (d.experience)
+          document.getElementById("experience").value = d.experience;
         if (d.currentWeight && d.fightDate) calculate();
       }
 
@@ -794,7 +905,9 @@
       }
 
       function autoSaveCurrentWeightForToday() {
-        const weight = parseFloat(document.getElementById("currentWeight").value);
+        const weight = parseFloat(
+          document.getElementById("currentWeight").value,
+        );
         if (Number.isNaN(weight) || weight <= 0) return;
         const weights = getDailyWeights();
         weights[today()] = Number(weight.toFixed(1));
@@ -823,7 +936,8 @@
         const dates = Object.keys(weights).sort((a, b) => b.localeCompare(a));
         const list = document.getElementById("dailyWeightList");
         if (!dates.length) {
-          list.innerHTML = '<div class="log-meta">Noch keine Einträge gespeichert.</div>';
+          list.innerHTML =
+            '<div class="log-meta">Noch keine Einträge gespeichert.</div>';
           return;
         }
         list.innerHTML = dates
@@ -844,7 +958,9 @@
 
         const cw = parseFloat(document.getElementById("currentWeight").value);
         const fightDate = document.getElementById("fightDate").value;
-        const customLimit = parseFloat(document.getElementById("customLimit").value);
+        const customLimit = parseFloat(
+          document.getElementById("customLimit").value,
+        );
         const weightClass = document.getElementById("weightClass").value;
         const sport = document.getElementById("sport").value;
         const weighInType = document.getElementById("weighInType").value;
@@ -852,7 +968,9 @@
 
         let weightLimit = customLimit || null;
         if (!weightLimit && weightClass) {
-          const wc = (WEIGHT_CLASSES[sport] || []).find((w) => w.name === weightClass);
+          const wc = (WEIGHT_CLASSES[sport] || []).find(
+            (w) => w.name === weightClass,
+          );
           if (wc) weightLimit = wc.limit;
         }
 
@@ -864,7 +982,8 @@
 
         const daysUntil = daysBetween(today(), fightDate);
         if (daysUntil < 0) {
-          el.innerHTML = '<div class="warn-box">Der Wettkampf liegt in der Vergangenheit.</div>';
+          el.innerHTML =
+            '<div class="warn-box">Der Wettkampf liegt in der Vergangenheit.</div>';
           return;
         }
 
@@ -876,12 +995,20 @@
         const targetAt7 = weightLimit * (1 + weekTargetOverPct / 100);
 
         const nutritionDays = Math.max(0, daysUntil - 7);
-        const nutritionCutKg = nutritionDays > 0 ? Math.max(0, cw - targetAt7) : 0;
-        const startFightWeekWeight = nutritionDays > 0 ? Math.max(weightLimit, cw - nutritionCutKg) : cw;
+        const nutritionCutKg =
+          nutritionDays > 0 ? Math.max(0, cw - targetAt7) : 0;
+        const startFightWeekWeight =
+          nutritionDays > 0 ? Math.max(weightLimit, cw - nutritionCutKg) : cw;
         const fightWeekCutKg = Math.max(0, startFightWeekWeight - weightLimit);
-        const fightWeekCutPct = startFightWeekWeight > 0 ? (fightWeekCutKg / startFightWeekWeight) * 100 : 0;
+        const fightWeekCutPct =
+          startFightWeekWeight > 0
+            ? (fightWeekCutKg / startFightWeekWeight) * 100
+            : 0;
 
-        const kcalDeficit = nutritionDays > 0 && nutritionCutKg > 0 ? Math.round((nutritionCutKg * 7700) / nutritionDays) : 0;
+        const kcalDeficit =
+          nutritionDays > 0 && nutritionCutKg > 0
+            ? Math.round((nutritionCutKg * 7700) / nutritionDays)
+            : 0;
         const waterLoadingRecommended = fightWeekCutPct >= 5;
 
         const schedule = buildSchedule({
@@ -893,7 +1020,7 @@
           startFightWeekWeight,
           fightWeekCutKg,
           fightWeekCutPct,
-          waterLoadingRecommended
+          waterLoadingRecommended,
         });
 
         let html = "";
@@ -922,10 +1049,16 @@
           ${nutritionDays > 0 && nutritionCutKg <= 0 ? "<br />Du liegst bereits im Zielbereich für die Kalorienphase." : ""}
         </div>`;
 
-        html += '<div class="card"><div class="card-title">Cut-Plan</div><div class="timeline">';
+        html +=
+          '<div class="card"><div class="card-title">Cut-Plan</div><div class="timeline">';
         schedule.forEach((day) => {
           const phase = PHASES[day.phase];
-          const label = day.daysLeft === 1 ? (weighInType === "day_before" ? "WIEGEN" : "KAMPF") : formatDate(day.date);
+          const label =
+            day.daysLeft === 1
+              ? weighInType === "day_before"
+                ? "WIEGEN"
+                : "KAMPF"
+              : formatDate(day.date);
           html += `<div class="day-row" style="border-left-color:${phase.color}">
             <div class="day-date">
               <div class="day-label">${label}</div>
@@ -958,7 +1091,7 @@
           nutritionCutKg,
           startFightWeekWeight,
           fightWeekCutKg,
-          waterLoadingRecommended
+          waterLoadingRecommended,
         } = ctx;
 
         if (daysUntil < 1) return [];
@@ -991,7 +1124,7 @@
               "Protein hoch halten",
               "Normale Salzmenge",
               "Training wie geplant",
-              "7-9h Schlaf"
+              "7-9h Schlaf",
             ];
           } else if (daysLeft > 4) {
             phase = "lowcarb";
@@ -1000,7 +1133,7 @@
               "Protein ca. 2 g/kg",
               "Ballaststoffe etwas senken",
               "Salz noch normal bis leicht reduziert",
-              "Training leicht runterfahren"
+              "Training leicht runterfahren",
             ];
           } else if (daysLeft > 2) {
             phase = "sodium";
@@ -1008,14 +1141,16 @@
               "Salzreduktion jetzt sinnvoll (2-4 Tage vor Waage)",
               "Keine stark salzigen Fertigprodukte",
               "Low-Carb beibehalten",
-              "Gewicht morgens tracken"
+              "Gewicht morgens tracken",
             ];
           } else if (daysLeft === 2) {
             phase = "water";
             tips = [
-              waterLoadingRecommended ? "Water-Loading sinnvoll (Fight Week Cut >= 5%)" : "Kein aggressives Water-Loading nötig (<5%)",
+              waterLoadingRecommended
+                ? "Water-Loading sinnvoll (Fight Week Cut >= 5%)"
+                : "Kein aggressives Water-Loading nötig (<5%)",
               "Trinkstrategie mit Coach abstimmen",
-              "Sauna erst innerhalb der letzten 24h vor Waage"
+              "Sauna erst innerhalb der letzten 24h vor Waage",
             ];
           } else {
             phase = "cut";
@@ -1023,7 +1158,7 @@
               "Nur finalen Rest cutten",
               "Sauna/Hot Bath nur in den letzten 24h",
               "Keine Extremmanover ohne Betreuung",
-              "Nach Waage sofort Rehydrieren"
+              "Nach Waage sofort Rehydrieren",
             ];
           }
 
@@ -1032,7 +1167,7 @@
             daysLeft,
             phase,
             target: Math.max(limit, target),
-            tips
+            tips,
           });
         }
 
@@ -1045,7 +1180,13 @@
 
       function formatDate(ds) {
         const d = new Date(ds + "T00:00:00");
-        return d.toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" }).toUpperCase();
+        return d
+          .toLocaleDateString("de-DE", {
+            weekday: "short",
+            day: "2-digit",
+            month: "2-digit",
+          })
+          .toUpperCase();
       }
 
       function riskLabel(pct) {
