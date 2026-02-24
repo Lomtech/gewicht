@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#1a1410" />
+  <rect x="0" y="0" width="512" height="28" fill="#c0281a" />
+  <text x="256" y="250" text-anchor="middle" font-size="150" font-family="Arial, sans-serif" font-weight="700" fill="#faf7f3">WC</text>
+  <text x="256" y="340" text-anchor="middle" font-size="56" font-family="Arial, sans-serif" fill="#c8bfb2">PLANNER</text>
+</svg>
