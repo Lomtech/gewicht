@@ -2,7 +2,19 @@
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#1a1410" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Weight Cut" />
+    <link rel="manifest" href="./manifest.webmanifest" />
     <title>WEIGHT CUT PLANNER</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Barlow:wght@300;400;500;600&display=swap"
@@ -48,6 +60,14 @@
           rgba(180, 160, 140, 0.12) 31px,
           rgba(180, 160, 140, 0.12) 32px
         );
+        touch-action: manipulation;
+      }
+      button,
+      input,
+      select,
+      .btn,
+      .btn-small {
+        touch-action: manipulation;
       }
 
       .header {
@@ -109,6 +129,7 @@
         max-width: 880px;
         margin: 0 auto;
         padding: 0 16px 80px;
+        overflow-x: hidden;
       }
 
       .card {
@@ -161,6 +182,9 @@
       }
 
       .btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
         background: var(--red);
         color: var(--white);
         border: 2px solid var(--ink);
@@ -261,6 +285,10 @@
       .day-date {
         min-width: 76px;
       }
+      .day-content {
+        min-width: 0;
+        flex: 1;
+      }
       .day-label {
         font-family: "Barlow Condensed", sans-serif;
         font-size: 9px;
@@ -311,9 +339,17 @@
       .log-row {
         display: flex;
         gap: 10px;
-        align-items: end;
+        align-items: flex-end;
         margin-bottom: 14px;
         flex-wrap: wrap;
+      }
+      .log-row .form-group {
+        flex: 1 1 180px;
+        min-width: 0;
+      }
+      .log-row .btn {
+        margin-top: 0;
+        white-space: nowrap;
       }
       .log-list {
         border-top: 1px solid var(--border);
@@ -345,15 +381,95 @@
         font-size: 12px;
       }
 
-      @media (max-width: 520px) {
-        .card {
-          padding: 18px 14px;
+      @media (max-width: 820px) {
+        .form-grid {
+          grid-template-columns: 1fr 1fr;
         }
         .stats-grid {
           grid-template-columns: 1fr 1fr;
         }
+        .stat-card {
+          border-right: none;
+          border-bottom: 2px solid var(--ink);
+        }
+        .stat-card:nth-last-child(-n + 2) {
+          border-bottom: none;
+        }
+        .header-inner {
+          padding: 28px 16px 24px;
+        }
+        .header h1 {
+          font-size: clamp(36px, 13vw, 72px);
+          line-height: 0.92;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 0 10px 40px;
+        }
+        .card {
+          padding: 16px 12px;
+          margin-top: 14px;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .btn {
+          width: 100%;
+          padding: 12px 16px;
+        }
+        .log-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .log-row .form-group {
+          width: 100%;
+        }
+        .log-row .btn {
+          width: 100%;
+        }
         .day-row {
           flex-direction: column;
+          gap: 8px;
+          padding: 10px 12px;
+        }
+        .day-date {
+          min-width: 0;
+        }
+        .day-weight {
+          font-size: 22px;
+        }
+        .tip-tag {
+          white-space: normal;
+        }
+        .log-item {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .log-item > div:last-child {
+          width: 100%;
+          justify-content: space-between;
+        }
+        .info-box,
+        .warn-box,
+        .risk-banner,
+        .rehyd-box {
+          padding: 12px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .stats-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .header-eyebrow {
+          font-size: 10px;
+          letter-spacing: 0.18em;
+        }
+        .header-sub {
+          font-size: 11px;
         }
       }
     </style>
@@ -559,6 +675,25 @@
         setCurrentWeightFromTodayLog();
         renderDailyWeightList();
       });
+
+      let lastTouchEnd = 0;
+      document.addEventListener(
+        "touchend",
+        (event) => {
+          const now = Date.now();
+          if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+          }
+          lastTouchEnd = now;
+        },
+        { passive: false },
+      );
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").catch(() => {});
+        });
+      }
 
       function today() {
         return new Date().toISOString().split("T")[0];
