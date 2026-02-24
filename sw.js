@@ -1,10 +1,12 @@
-const CACHE_NAME = "weight-cut-planner-v4";
+const CACHE_NAME = "weight-cut-planner-v5";
 const ASSETS = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./icon-192.svg",
-  "./icon-512.svg"
+  "./icon-512.svg",
+  "./icon-192.png",
+  "./icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
