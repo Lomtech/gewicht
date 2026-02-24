@@ -50,10 +50,8 @@
         );
       }
 
-      /* ─ HEADER ──────────────────────── */
       .header {
         background: var(--ink);
-        padding: 0;
         position: relative;
         overflow: hidden;
       }
@@ -61,6 +59,8 @@
         padding: 36px 24px 32px;
         position: relative;
         z-index: 1;
+        max-width: 880px;
+        margin: 0 auto;
       }
       .header-stripe {
         position: absolute;
@@ -84,23 +84,12 @@
         color: var(--ink3);
         font-weight: 600;
         margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .header-eyebrow::after {
-        content: "";
-        flex: 1;
-        max-width: 80px;
-        height: 1px;
-        background: var(--ink3);
       }
       .header h1 {
         font-family: "Barlow Condensed", sans-serif;
         font-size: clamp(48px, 11vw, 96px);
         font-weight: 900;
         line-height: 0.88;
-        letter-spacing: -0.01em;
         text-transform: uppercase;
         color: var(--white);
       }
@@ -112,80 +101,22 @@
         color: var(--ink3);
         font-size: 13px;
         margin-top: 18px;
-        font-weight: 400;
         letter-spacing: 0.05em;
         text-transform: uppercase;
       }
-      .header-deco {
-        position: absolute;
-        right: -20px;
-        bottom: -10px;
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 180px;
-        font-weight: 900;
-        color: rgba(255, 255, 255, 0.03);
-        line-height: 1;
-        user-select: none;
-        pointer-events: none;
-        text-transform: uppercase;
-      }
 
-      /* ─ CONTAINER ───────────────────── */
       .container {
         max-width: 880px;
         margin: 0 auto;
         padding: 0 16px 80px;
       }
 
-      /* ─ TABS ────────────────────────── */
-      .tabs {
-        display: flex;
-        margin-top: 28px;
-        border: 2px solid var(--ink);
-        background: var(--white);
-        box-shadow: var(--shadow);
-      }
-      .tab-btn {
-        flex: 1;
-        background: none;
-        border: none;
-        border-right: 2px solid var(--ink);
-        padding: 12px 16px;
-        font-size: 12px;
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--ink3);
-        cursor: pointer;
-        transition: all 0.1s;
-      }
-      .tab-btn:last-child {
-        border-right: none;
-      }
-      .tab-btn.active {
-        background: var(--ink);
-        color: var(--white);
-      }
-      .tab-btn:hover:not(.active) {
-        background: var(--paper);
-        color: var(--ink);
-      }
-      .tab-content {
-        display: none;
-      }
-      .tab-content.active {
-        display: block;
-      }
-
-      /* ─ CARD ────────────────────────── */
       .card {
         background: var(--white);
         border: 2px solid var(--ink);
         padding: 24px;
         margin-top: 20px;
         box-shadow: var(--shadow);
-        position: relative;
       }
       .card-title {
         font-family: "Barlow Condensed", sans-serif;
@@ -195,18 +126,8 @@
         color: var(--red);
         font-weight: 700;
         margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .card-title::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--border);
       }
 
-      /* ─ FORM ────────────────────────── */
       .form-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
@@ -232,23 +153,14 @@
         font-size: 14px;
         font-family: "Barlow", sans-serif;
         font-weight: 500;
-        outline: none;
-        border-radius: 0;
-        appearance: none;
-        transition: border-color 0.1s;
       }
-      .form-group input:focus,
-      .form-group select:focus {
-        border-color: var(--ink);
-        background: var(--white);
-        box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.08);
+      .field-help {
+        margin-top: 5px;
+        color: var(--ink3);
+        font-size: 11px;
       }
 
-      /* ─ BUTTON ──────────────────────── */
       .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
         background: var(--red);
         color: var(--white);
         border: 2px solid var(--ink);
@@ -260,36 +172,12 @@
         text-transform: uppercase;
         cursor: pointer;
         box-shadow: var(--shadow-sm);
-        transition:
-          transform 0.08s,
-          box-shadow 0.08s;
-        border-radius: 0;
         margin-top: 20px;
       }
-      .btn:hover {
-        transform: translate(-1px, -1px);
-        box-shadow: 3px 3px 0 var(--ink);
-      }
-      .btn:active {
-        transform: translate(1px, 1px);
-        box-shadow: 1px 1px 0 var(--ink);
-      }
-      .btn-ghost {
-        background: transparent;
-        color: var(--ink);
-        border: 2px solid var(--ink);
-        box-shadow: var(--shadow-sm);
-      }
-      .btn-ghost:hover {
-        background: var(--ink);
-        color: var(--white);
-      }
 
-      /* ─ STATS ───────────────────────── */
       .stats-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 0;
         margin-top: 20px;
         border: 2px solid var(--ink);
         box-shadow: var(--shadow);
@@ -298,7 +186,6 @@
         background: var(--white);
         padding: 18px 16px;
         border-right: 2px solid var(--ink);
-        position: relative;
       }
       .stat-card:last-child {
         border-right: none;
@@ -314,29 +201,27 @@
       }
       .stat-value {
         font-family: "Barlow Condensed", sans-serif;
-        font-size: 32px;
+        font-size: 30px;
         font-weight: 900;
         line-height: 1;
-        letter-spacing: -0.02em;
       }
       .stat-unit {
         font-size: 12px;
-        font-weight: 400;
         color: var(--ink3);
-        font-family: "Barlow", sans-serif;
       }
 
-      /* ─ RISK BANNER ─────────────────── */
-      .risk-banner {
+      .risk-banner,
+      .warn-box,
+      .info-box,
+      .rehyd-box {
         border: 2px solid var(--ink);
         padding: 14px 18px;
         margin-top: 16px;
-        display: flex;
-        align-items: flex-start;
-        gap: 14px;
+        background: var(--white);
         box-shadow: var(--shadow-sm);
       }
       .risk-tag {
+        display: inline-block;
         font-family: "Barlow Condensed", sans-serif;
         font-size: 10px;
         font-weight: 800;
@@ -344,42 +229,25 @@
         text-transform: uppercase;
         padding: 3px 8px;
         border: 1.5px solid currentColor;
-        white-space: nowrap;
-        flex-shrink: 0;
+        margin-bottom: 8px;
       }
-      .risk-desc-text {
-        font-size: 13px;
-        color: var(--ink2);
-        line-height: 1.5;
-      }
-      .risk-warn {
-        font-size: 12px;
+      .warn-box {
+        border-color: var(--red);
+        background: var(--red-light);
         color: var(--red);
-        font-weight: 600;
-        margin-top: 4px;
+      }
+      .info-box {
+        border-color: var(--olive);
+        background: var(--olive-light);
+      }
+      .rehyd-box {
+        border-color: var(--olive);
+        background: var(--olive-light);
       }
 
-      /* ─ PHASE LEGEND ────────────────── */
-      .phase-legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-bottom: 16px;
+      .timeline {
+        margin-top: 16px;
       }
-      .phase-pill {
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 3px 8px;
-        border: 1.5px solid currentColor;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      /* ─ TIMELINE ────────────────────── */
       .day-row {
         display: flex;
         gap: 16px;
@@ -389,29 +257,9 @@
         border-left: 4px solid var(--border-heavy);
         padding: 12px 16px;
         margin-bottom: 6px;
-        transition: border-color 0.1s;
-      }
-      .day-row:hover {
-        border-color: var(--ink);
-        border-left-color: var(--ink);
-      }
-      .day-row.today {
-        border-color: var(--ink);
-        border-left-color: var(--red);
-        border-left-width: 5px;
-        background: #fff9f8;
-      }
-      .day-row.fight-day {
-        border-color: var(--ink);
-        border-left-color: var(--olive);
-        border-left-width: 5px;
-        background: #f7f9f4;
       }
       .day-date {
-        min-width: 68px;
-        text-align: left;
-        flex-shrink: 0;
-        padding-top: 2px;
+        min-width: 76px;
       }
       .day-label {
         font-family: "Barlow Condensed", sans-serif;
@@ -419,23 +267,15 @@
         letter-spacing: 0.2em;
         text-transform: uppercase;
         color: var(--ink3);
-        font-weight: 700;
       }
       .day-weight {
         font-family: "Barlow Condensed", sans-serif;
         font-size: 24px;
         font-weight: 900;
-        line-height: 1.1;
-        letter-spacing: -0.01em;
       }
       .day-weight-unit {
         font-size: 11px;
-        font-family: "Barlow", sans-serif;
         color: var(--ink3);
-        font-weight: 400;
-      }
-      .day-content {
-        flex: 1;
       }
       .day-phase-name {
         font-family: "Barlow Condensed", sans-serif;
@@ -443,10 +283,7 @@
         font-weight: 800;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        margin-bottom: 7px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        margin-bottom: 6px;
       }
       .day-tips {
         display: flex;
@@ -460,182 +297,15 @@
         border: 1px solid var(--border);
         padding: 2px 7px;
         color: var(--ink2);
-        border-radius: 0;
       }
 
-      /* ─ REHYD BOX ───────────────────── */
-      .rehyd-box {
-        border: 2px solid var(--olive);
-        background: var(--olive-light);
-        padding: 18px 20px;
-        margin-top: 10px;
-      }
-      .rehyd-title {
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 800;
-        font-size: 13px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--olive);
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .rehyd-list {
-        list-style: none;
-      }
-      .rehyd-list li {
-        font-size: 13px;
-        color: #3a4a25;
-        padding: 2px 0;
-        display: flex;
-        align-items: baseline;
-        gap: 6px;
-      }
-      .rehyd-list li::before {
-        content: "▶";
-        font-size: 8px;
-        color: var(--olive);
-        flex-shrink: 0;
-      }
-
-      /* ─ WARN BOX ────────────────────── */
-      .warn-box {
-        border: 2px solid var(--red);
-        background: var(--red-light);
-        padding: 12px 16px;
-        margin-top: 12px;
-        font-size: 13px;
-        color: var(--red);
-        font-weight: 500;
-      }
-
-      /* ─ LOG ─────────────────────────── */
-      .log-input-row {
-        display: flex;
-        gap: 12px;
-        align-items: flex-end;
-        margin-bottom: 20px;
-      }
-      .log-input-row .form-group {
-        flex: 1;
-        margin: 0;
-      }
-      .log-input-row .btn {
-        margin-top: 0;
-      }
-      .log-entry {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid var(--border);
-        gap: 12px;
-      }
-      .log-entry:last-child {
-        border-bottom: none;
-      }
-      .log-date {
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 13px;
-        letter-spacing: 0.08em;
-        color: var(--ink2);
-        text-transform: uppercase;
-        font-weight: 600;
-      }
-      .log-right {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .log-weight {
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 22px;
-        font-weight: 900;
-      }
-      .log-diff-pos {
-        font-size: 12px;
-        color: var(--red);
-        font-weight: 600;
-        font-family: "Barlow Condensed", sans-serif;
-      }
-      .log-diff-neg {
-        font-size: 12px;
-        color: var(--olive);
-        font-weight: 600;
-        font-family: "Barlow Condensed", sans-serif;
-      }
-      .btn-delete {
-        background: none;
-        border: 1.5px solid var(--border);
-        color: var(--ink3);
-        cursor: pointer;
-        font-size: 14px;
-        width: 26px;
-        height: 26px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.1s;
-        border-radius: 0;
-        font-family: "Barlow", sans-serif;
-      }
-      .btn-delete:hover {
-        border-color: var(--red);
-        color: var(--red);
-        background: var(--red-light);
-      }
-
-      /* ─ EMPTY STATE ─────────────────── */
-      .empty {
-        text-align: center;
-        padding: 48px 20px;
-        color: var(--ink3);
-        font-size: 13px;
-      }
-      .empty-icon {
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 48px;
-        font-weight: 900;
-        color: var(--border);
-        margin-bottom: 12px;
-        text-transform: uppercase;
-        letter-spacing: -0.02em;
-      }
-
-      /* ─ DISCLAIMER ──────────────────── */
       .disclaimer {
         border-top: 1px solid var(--border);
-        margin-top: 48px;
+        margin-top: 32px;
         padding-top: 18px;
         text-align: center;
         font-size: 11px;
         color: var(--ink3);
-        line-height: 1.8;
-        letter-spacing: 0.03em;
-      }
-
-      /* ─ SECTION DIVIDER ─────────────── */
-      .section-divider {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 28px 0 16px;
-      }
-      .section-divider-text {
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        color: var(--ink);
-        white-space: nowrap;
-      }
-      .section-divider-line {
-        flex: 1;
-        height: 1px;
-        background: var(--border-heavy);
       }
 
       @media (max-width: 520px) {
@@ -645,135 +315,94 @@
         .stats-grid {
           grid-template-columns: 1fr 1fr;
         }
-        .stat-card {
-          border-bottom: 2px solid var(--ink);
-        }
         .day-row {
-          flex-direction: column;
-          gap: 8px;
-        }
-        .log-input-row {
           flex-direction: column;
         }
       }
     </style>
   </head>
   <body>
-    <!-- HEADER -->
     <div class="header">
       <div class="header-stripe"></div>
-      <div class="header-inner" style="max-width: 880px; margin: 0 auto">
+      <div class="header-inner">
         <div class="header-eyebrow">Combat Sports · Gewichtsmanagement</div>
         <h1>WEIGHT<br /><span class="accent">CUT</span><br />PLANNER</h1>
         <p class="header-sub">Taktische Planung. Präzise Ausführung.</p>
       </div>
-      <div class="header-deco">CUT</div>
     </div>
 
     <div class="container">
-      <!-- TABS -->
-      <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('planner', this)">
-          ⊕ Planner
-        </button>
-        <button class="tab-btn" onclick="switchTab('log', this)">
-          ◈ Gewichtstagebuch
-        </button>
-      </div>
-
-      <!-- ── TAB: PLANNER ── -->
-      <div id="tab-planner" class="tab-content active">
-        <div class="card">
-          <div class="card-title">Eingabe</div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Sportart</label>
-              <select id="sport" onchange="onSportChange()">
-                <option>BJJ / Grappling</option>
-                <option>MMA</option>
-                <option>Boxing</option>
-                <option>Wrestling</option>
-                <option>Kickboxing / Muay Thai</option>
-                <option>Judo</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Gewichtsklasse</label>
-              <select id="weightClass" onchange="saveForm()"></select>
-            </div>
-            <div class="form-group">
-              <label>Eigenes Limit (kg)</label>
-              <input
-                type="number"
-                id="customLimit"
-                placeholder="z.B. 77.1"
-                step="0.1"
-                oninput="saveForm()"
-              />
-            </div>
-            <div class="form-group">
-              <label>Aktuelles Gewicht (kg)</label>
-              <input
-                type="number"
-                id="currentWeight"
-                placeholder="z.B. 84.5"
-                step="0.1"
-                oninput="saveForm()"
-              />
-            </div>
-            <div class="form-group">
-              <label>Wettkampfdatum</label>
-              <input type="date" id="fightDate" oninput="saveForm()" />
-            </div>
-            <div class="form-group">
-              <label>Wiegemodus</label>
-              <select id="weighInType" onchange="saveForm()">
-                <option value="day_before">Tag vorher wiegen</option>
-                <option value="same_day">Am Kampftag wiegen</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Erfahrung</label>
-              <select id="experience" onchange="saveForm()">
-                <option value="beginner">Anfänger</option>
-                <option value="intermediate" selected>Intermediate</option>
-                <option value="advanced">Erfahren</option>
-              </select>
+      <div class="card">
+        <div class="card-title">Eingabe</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Sportart</label>
+            <select id="sport" onchange="onSportChange()">
+              <option>BJJ / Grappling</option>
+              <option>MMA</option>
+              <option>Boxing</option>
+              <option>Wrestling</option>
+              <option>Kickboxing / Muay Thai</option>
+              <option>Judo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Gewichtsklasse</label>
+            <select id="weightClass"></select>
+          </div>
+          <div class="form-group">
+            <label>Eigenes Limit (kg, optional)</label>
+            <input
+              type="number"
+              id="customLimit"
+              placeholder="z.B. 77.1"
+              step="0.1"
+            />
+            <div class="field-help">
+              Überschreibt die gewählte Gewichtsklasse, falls dein Turnier ein
+              abweichendes Limit hat.
             </div>
           </div>
-          <button class="btn" onclick="calculate()">▶ Plan berechnen</button>
-        </div>
-
-        <div id="results"></div>
-      </div>
-
-      <!-- ── TAB: LOG ── -->
-      <div id="tab-log" class="tab-content">
-        <div class="card">
-          <div class="card-title">Gewicht eintragen</div>
-          <div class="log-input-row">
-            <div class="form-group">
-              <label>Datum</label>
-              <input type="date" id="logDate" />
-            </div>
-            <div class="form-group">
-              <label>Gewicht (kg)</label>
-              <input
-                type="number"
-                id="logWeight"
-                placeholder="83.2"
-                step="0.1"
-              />
-            </div>
-            <button class="btn" onclick="addLogEntry()">+ Eintragen</button>
+          <div class="form-group">
+            <label>Aktuelles Gewicht (kg)</label>
+            <input
+              type="number"
+              id="currentWeight"
+              placeholder="z.B. 84.5"
+              step="0.1"
+            />
           </div>
-          <div id="logList"></div>
+          <div class="form-group">
+            <label>Wettkampfdatum</label>
+            <input type="date" id="fightDate" />
+          </div>
+          <div class="form-group">
+            <label>Wiegemodus</label>
+            <select id="weighInType">
+              <option value="day_before">Tag vorher wiegen</option>
+              <option value="same_day">Am Kampftag wiegen</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Erfahrung</label>
+            <select id="experience">
+              <option value="beginner">
+                Anfänger (ca. 0 bis 5 Weight Cuts)
+              </option>
+              <option value="intermediate" selected>
+                Intermediate (ca. 6 bis 10 Weight Cuts)
+              </option>
+              <option value="advanced">Erfahren (über 10 Weight Cuts)</option>
+            </select>
+          </div>
         </div>
+        <button class="btn" onclick="calculate()">Plan berechnen</button>
       </div>
+
+      <div id="results"></div>
     </div>
 
     <script>
-      // ─── DATA ──────────────────────────────────────────────────────────────────
       const WEIGHT_CLASSES = {
         "BJJ / Grappling": [
           { name: "Rooster (-57,5 kg)", limit: 57.5 },
@@ -837,67 +466,43 @@
       };
 
       const PHASES = {
-        clean: {
-          name: "Clean Eating",
-          icon: "◈",
-          color: "#5c6b3a",
-          border: "#5c6b3a",
-        },
-        lowcarb: {
-          name: "Low-Carb Depletion",
-          icon: "◈",
-          color: "#7a5c1a",
-          border: "#7a5c1a",
-        },
-        sodium: {
-          name: "Natrium-Reduktion",
-          icon: "◈",
-          color: "#1a5a7a",
-          border: "#1a5a7a",
-        },
-        water: {
-          name: "Wasserladung→Cut",
-          icon: "◈",
-          color: "#1a6b6b",
-          border: "#1a6b6b",
-        },
-        cut: {
-          name: "Aktiver Watercut",
-          icon: "◈",
-          color: "#c0281a",
-          border: "#c0281a",
-        },
+        clean: { name: "Kalorienphase", color: "#5c6b3a" },
+        lowcarb: { name: "Low-Carb Depletion", color: "#7a5c1a" },
+        sodium: { name: "Salz-Reduktion", color: "#1a5a7a" },
+        water: { name: "Wasserstrategie", color: "#1a6b6b" },
+        cut: { name: "Finaler Cut", color: "#c0281a" },
       };
 
-      // ─── INIT ──────────────────────────────────────────────────────────────────
+      const WARNING_THRESHOLDS = {
+        same_day: { beginner: 1, intermediate: 3, advanced: 5 },
+        day_before: { beginner: 3, intermediate: 8, advanced: 10 },
+      };
+
+      const CALORIE_TARGETS_7D = {
+        same_day: { beginner: 1, intermediate: 2, advanced: 4 },
+        day_before: { beginner: 3, intermediate: 6, advanced: 10 },
+      };
+
       window.addEventListener("DOMContentLoaded", () => {
         populateWeightClasses();
+        document
+          .getElementById("weightClass")
+          .addEventListener("change", saveForm);
+        document.querySelectorAll("input, select").forEach((el) => {
+          if (el.id !== "weightClass") el.addEventListener("input", saveForm);
+        });
         loadForm();
-        renderLogList();
-        document.getElementById("logDate").value = today();
       });
 
       function today() {
         return new Date().toISOString().split("T")[0];
       }
 
-      function switchTab(tab, btn) {
-        document
-          .querySelectorAll(".tab-btn")
-          .forEach((b) => b.classList.remove("active"));
-        document
-          .querySelectorAll(".tab-content")
-          .forEach((c) => c.classList.remove("active"));
-        document.getElementById("tab-" + tab).classList.add("active");
-        btn.classList.add("active");
-      }
-
-      // ─── WEIGHT CLASSES ────────────────────────────────────────────────────────
       function populateWeightClasses(sport) {
         const s = sport || document.getElementById("sport").value;
         const sel = document.getElementById("weightClass");
         const prev = sel.value;
-        sel.innerHTML = '<option value="">— Auswählen —</option>';
+        sel.innerHTML = '<option value="">- Auswaehlen -</option>';
         (WEIGHT_CLASSES[s] || []).forEach((w) => {
           const o = document.createElement("option");
           o.value = w.name;
@@ -912,7 +517,6 @@
         saveForm();
       }
 
-      // ─── FORM PERSISTENCE ──────────────────────────────────────────────────────
       function saveForm() {
         localStorage.setItem(
           "wcp_form",
@@ -951,66 +555,9 @@
         if (d.currentWeight && d.fightDate) calculate();
       }
 
-      // ─── LOG ───────────────────────────────────────────────────────────────────
-      function getLog() {
-        return JSON.parse(localStorage.getItem("wcp_log") || "[]");
-      }
-      function saveLog(log) {
-        localStorage.setItem("wcp_log", JSON.stringify(log));
-      }
-
-      function addLogEntry() {
-        const date = document.getElementById("logDate").value;
-        const weight = parseFloat(document.getElementById("logWeight").value);
-        if (!date || isNaN(weight))
-          return alert("Bitte Datum und Gewicht eingeben.");
-        const log = getLog();
-        const idx = log.findIndex((e) => e.date === date);
-        if (idx >= 0) log[idx].weight = weight;
-        else log.push({ date, weight });
-        log.sort((a, b) => b.date.localeCompare(a.date));
-        saveLog(log);
-        document.getElementById("logWeight").value = "";
-        renderLogList();
-      }
-
-      function deleteLogEntry(date) {
-        saveLog(getLog().filter((e) => e.date !== date));
-        renderLogList();
-      }
-
-      function renderLogList() {
-        const log = getLog();
-        const el = document.getElementById("logList");
-        if (!log.length) {
-          el.innerHTML =
-            '<div class="empty"><div class="empty-icon">LEER</div>Noch keine Einträge. Trag dein Gewicht täglich ein!</div>';
-          return;
-        }
-        el.innerHTML = log
-          .map((entry, i) => {
-            const prev = log[i + 1];
-            let diffHtml = "";
-            if (prev) {
-              const diff = entry.weight - prev.weight;
-              const sign = diff > 0 ? "+" : "";
-              diffHtml = `<span class="${diff > 0 ? "log-diff-pos" : "log-diff-neg"}">${sign}${diff.toFixed(1)} kg</span>`;
-            }
-            return `<div class="log-entry">
-      <span class="log-date">${formatDate(entry.date)}</span>
-      <div class="log-right">
-        ${diffHtml}
-        <span class="log-weight">${entry.weight.toFixed(1)} kg</span>
-        <button class="btn-delete" onclick="deleteLogEntry('${entry.date}')" title="Löschen">×</button>
-      </div>
-    </div>`;
-          })
-          .join("");
-      }
-
-      // ─── CALCULATE ─────────────────────────────────────────────────────────────
       function calculate() {
         saveForm();
+
         const cw = parseFloat(document.getElementById("currentWeight").value);
         const fightDate = document.getElementById("fightDate").value;
         const customLimit = parseFloat(
@@ -1030,194 +577,193 @@
         }
 
         const el = document.getElementById("results");
-
         if (!cw || !weightLimit || !fightDate) {
-          el.innerHTML =
-            '<div class="empty"><div class="empty-icon">KEIN PLAN</div>Gewicht, Gewichtsklasse und Datum eingeben.</div>';
+          el.innerHTML = "";
           return;
         }
 
-        const todayStr = today();
-        const daysUntil = daysBetween(todayStr, fightDate);
+        const daysUntil = daysBetween(today(), fightDate);
         if (daysUntil < 0) {
           el.innerHTML =
-            '<div class="empty"><div class="empty-icon">VERPASST</div>Der Wettkampftag liegt in der Vergangenheit.</div>';
+            '<div class="warn-box">Der Wettkampf liegt in der Vergangenheit.</div>';
           return;
         }
 
-        const tocut = cw - weightLimit;
-        const pct = tocut > 0 ? (tocut / cw) * 100 : 0;
-        const risk = getRisk(pct);
-        const rehydHours = weighInType === "day_before" ? 20 : 2;
-        const schedule = buildSchedule(
+        const toCut = Math.max(0, cw - weightLimit);
+        const totalPct = cw > 0 ? (toCut / cw) * 100 : 0;
+
+        const weekTargetOverPct = CALORIE_TARGETS_7D[weighInType][experience];
+        const warningThresholdPct = WARNING_THRESHOLDS[weighInType][experience];
+        const targetAt7 = weightLimit * (1 + weekTargetOverPct / 100);
+
+        const nutritionDays = Math.max(0, daysUntil - 7);
+        const nutritionCutKg =
+          nutritionDays > 0 ? Math.max(0, cw - targetAt7) : 0;
+        const startFightWeekWeight =
+          nutritionDays > 0 ? Math.max(weightLimit, cw - nutritionCutKg) : cw;
+        const fightWeekCutKg = Math.max(0, startFightWeekWeight - weightLimit);
+        const fightWeekCutPct =
+          startFightWeekWeight > 0
+            ? (fightWeekCutKg / startFightWeekWeight) * 100
+            : 0;
+
+        const kcalDeficit =
+          nutritionDays > 0 && nutritionCutKg > 0
+            ? Math.round((nutritionCutKg * 7700) / nutritionDays)
+            : 0;
+        const waterLoadingRecommended = fightWeekCutPct >= 5;
+
+        const schedule = buildSchedule({
           cw,
-          weightLimit,
-          tocut,
+          limit: weightLimit,
           daysUntil,
-          fightDate,
-          todayStr,
-          weighInType,
-        );
+          nutritionDays,
+          nutritionCutKg,
+          startFightWeekWeight,
+          fightWeekCutKg,
+          fightWeekCutPct,
+          waterLoadingRecommended,
+        });
 
         let html = "";
 
-        // STATS
         html += `<div class="stats-grid">
-    ${sc("Zu schneiden", (tocut > 0 ? tocut.toFixed(1) : "0") + '<span class="stat-unit"> kg</span>', risk.color)}
-    ${sc("% Körpergewicht", pct.toFixed(1) + '<span class="stat-unit"> %</span>', risk.color)}
-    ${sc("Tage bis Kampf", daysUntil, "#1a1410")}
-    ${sc("Rehydration", "~" + rehydHours + '<span class="stat-unit"> h</span>', "#5c6b3a")}
-  </div>`;
+          ${statCard("Zu schneiden", `${toCut.toFixed(1)}<span class="stat-unit"> kg</span>`, "#c0281a")}
+          ${statCard("Gesamt %", `${totalPct.toFixed(1)}<span class="stat-unit"> %</span>`, "#c0281a")}
+          ${statCard("Fight Week Cut", `${fightWeekCutPct.toFixed(1)}<span class="stat-unit"> %</span>`, "#1a5a7a")}
+          ${statCard("Tage", `${daysUntil}<span class="stat-unit"> bis Kampf</span>`, "#1a1410")}
+        </div>`;
 
-        // RISK
-        html += `<div class="risk-banner" style="background:${risk.bg};border-color:${risk.color}">
-    <span class="risk-tag" style="color:${risk.color}">▌ ${risk.label}</span>
-    <div>
-      <div class="risk-desc-text">${risk.desc}</div>
-      ${tocut <= 0 ? '<div class="risk-warn">✓ Du bist bereits unter dem Limit — kein aktiver Cut nötig.</div>' : ""}
-      ${experience === "beginner" && pct > 5 ? '<div class="risk-warn">⚠ Als Anfänger: Coach hinzuziehen bei diesem Cut.</div>' : ""}
-    </div>
-  </div>`;
+        html += `<div class="risk-banner" style="border-color:${riskColor(totalPct)}; background:${riskBg(totalPct)};">
+          <span class="risk-tag" style="color:${riskColor(totalPct)}">${riskLabel(totalPct)}</span>
+          <div>Gesamtcut: ${toCut.toFixed(1)} kg. Entscheidend ist, wie viel davon in der Wettkampfwoche liegt.</div>
+        </div>`;
 
-        if (weighInType === "same_day" && tocut > 3) {
-          html += `<div class="warn-box">⚠ SAME-DAY WIEGEN: Über 3 kg Cut mit nur ~2h Rehydration ist medizinisch riskant. Erwäge die nächsthöhere Klasse.</div>`;
+        if (fightWeekCutPct > warningThresholdPct) {
+          html += `<div class="warn-box">Warnung (${weighInType === "same_day" ? "Same Day" : "Tag vorher"}): In deiner Wettkampfwoche sind aktuell ${fightWeekCutPct.toFixed(1)}% geplant. Für ${experienceLabel(experience)} liegt die empfohlene Warnschwelle bei ${warningThresholdPct.toFixed(1)}%.</div>`;
         }
 
-        // TIMELINE
-        if (schedule.length > 0) {
-          html += `<div class="card" style="margin-top:20px"><div class="card-title">Cut-Plan</div>`;
+        html += `<div class="info-box">
+          <strong>Kalorien- vs. Wasser-Cut Empfehlung</strong><br />
+          Ziel 7 Tage vor dem Kampf (${weighInType === "same_day" ? "Same Day" : "Tag vorher"}, ${experienceLabel(experience)}): max. ${weekTargetOverPct}% über Kampfgewicht (${targetAt7.toFixed(1)} kg).<br />
+          ${nutritionDays > 0 ? `Für die Ernährungsphase bleiben ${nutritionDays} Tage.` : "Weniger als 7 Tage bis zum Kampf: Fokus auf konservativen Wochen-Cut."}
+          ${nutritionDays > 0 && nutritionCutKg > 0 ? `<br />Nötiger Gewichtsverlust über Kalorienphase: ${nutritionCutKg.toFixed(1)} kg (~${kcalDeficit} kcal/Tag Defizit).` : ""}
+          ${nutritionDays > 0 && nutritionCutKg <= 0 ? "<br />Du liegst bereits im Zielbereich für die Kalorienphase." : ""}
+        </div>`;
 
-          html += `<div class="phase-legend">`;
-          Object.values(PHASES).forEach((p) => {
-            html += `<div class="phase-pill" style="color:${p.color};border-color:${p.border}">${p.icon} ${p.name}</div>`;
-          });
-          html += `</div>`;
-
-          schedule.forEach((day) => {
-            const p = PHASES[day.phase];
-            const isToday = day.date === todayStr;
-            const isFight = day.daysLeft === 1;
-            const label = isFight
+        html +=
+          '<div class="card"><div class="card-title">Cut-Plan</div><div class="timeline">';
+        schedule.forEach((day) => {
+          const phase = PHASES[day.phase];
+          const label =
+            day.daysLeft === 1
               ? weighInType === "day_before"
-                ? "▶ WIEGEN"
-                : "▶ KAMPF"
-              : isToday
-                ? "▶ HEUTE"
-                : formatDate(day.date);
-            const rowClass = `day-row${isToday ? " today" : ""}${isFight ? " fight-day" : ""}`;
-            html += `<div class="${rowClass}" style="border-left-color:${p.color}">
-        <div class="day-date">
-          <div class="day-label">${label}</div>
-          <div class="day-weight" style="color:${p.color}">${day.target.toFixed(1)}<span class="day-weight-unit"> kg</span></div>
-        </div>
-        <div class="day-content">
-          <div class="day-phase-name" style="color:${p.color}">${p.icon} ${p.name}</div>
-          <div class="day-tips">${day.tips.map((t) => `<span class="tip-tag">${t}</span>`).join("")}</div>
-        </div>
-      </div>`;
-          });
+                ? "WIEGEN"
+                : "KAMPF"
+              : formatDate(day.date);
+          html += `<div class="day-row" style="border-left-color:${phase.color}">
+            <div class="day-date">
+              <div class="day-label">${label}</div>
+              <div class="day-weight" style="color:${phase.color}">${day.target.toFixed(1)}<span class="day-weight-unit"> kg</span></div>
+            </div>
+            <div class="day-content">
+              <div class="day-phase-name" style="color:${phase.color}">${phase.name}</div>
+              <div class="day-tips">${day.tips.map((t) => `<span class="tip-tag">${t}</span>`).join("")}</div>
+            </div>
+          </div>`;
+        });
+        html += "</div></div>";
 
-          const isAdv = weighInType === "day_before";
-          html += `<div class="rehyd-box" style="margin-top:12px">
-      <div class="rehyd-title">▶ Nach dem Wiegen — Rehydration (~${rehydHours}h)</div>
-      <ul class="rehyd-list">
-        ${
-          isAdv
-            ? `
-          <li>Sofort: 500ml Elektrolytgetränk + leichter Snack</li>
-          <li>Erste 4h: 1–2L langsam trinken (nicht saufen)</li>
-          <li>Leichte Carbs: Banane, Reis, Toast</li>
-          <li>Schlafen: Körper regeneriert nachts enorm</li>
-          <li>Kampftag Morgen: Normales Frühstück, 500ml Wasser</li>
-          <li>Vor dem Kampf: Kleiner Snack 1–2h vorher</li>
-        `
-            : `
-          <li>Sofort: Elektrolyte + schnelle Carbs</li>
-          <li>Alle 15min: 150–200ml (nicht auf einmal)</li>
-          <li>Banane, Datteln, Weißbrot — leicht verdaulich</li>
-          <li>Kein schweres Essen direkt vor dem Kampf</li>
-        `
-        }
-      </ul>
-    </div>`;
+        html += `<div class="rehyd-box">
+          <strong>Nach dem Wiegen</strong><br />
+          Elektrolyte + leicht verdauliche Carbs. Flüssigkeit in kleinen Portionen, nicht auf einmal. Schwer verdauliche Mahlzeiten bis kurz vor Kampf vermeiden.
+        </div>`;
 
-          html += `</div>`;
-        }
-
-        html += `<div class="disclaimer">Diese App ersetzt keine medizinische oder sportliche Fachberatung.<br>Aggressive Weight Cuts können gesundheitliche Risiken darstellen. Im Zweifel Coach oder Sportarzt konsultieren.</div>`;
+        html += `<div class="disclaimer">Diese App ersetzt keine medizinische oder sportliche Fachberatung. Aggressive Weight Cuts können gesundheitliche Risiken darstellen.</div>`;
 
         el.innerHTML = html;
       }
 
-      // ─── SCHEDULE ──────────────────────────────────────────────────────────────
-      function buildSchedule(
-        cw,
-        limit,
-        tocut,
-        daysUntil,
-        fightDate,
-        todayStr,
-        weighInType,
-      ) {
+      function buildSchedule(ctx) {
+        const {
+          cw,
+          limit,
+          daysUntil,
+          nutritionDays,
+          nutritionCutKg,
+          startFightWeekWeight,
+          fightWeekCutKg,
+          waterLoadingRecommended,
+        } = ctx;
+
         if (daysUntil < 1) return [];
         const out = [];
+
         for (let i = 0; i < daysUntil; i++) {
-          const d = new Date(fightDate);
-          d.setDate(d.getDate() - (daysUntil - i));
-          const dateStr = d.toISOString().split("T")[0];
+          const date = new Date();
+          date.setDate(date.getDate() + i + 1);
+          const dateStr = date.toISOString().split("T")[0];
           const daysLeft = daysUntil - i;
-          let phase, target, tips;
+
+          let target = limit;
+          if (daysLeft > 7 && nutritionDays > 0) {
+            const preProgress = (i + 1) / nutritionDays;
+            target = cw - nutritionCutKg * Math.min(1, preProgress);
+          } else {
+            const weekDays = Math.min(7, daysUntil);
+            const weekIndex = weekDays - daysLeft + 1;
+            const weekProgress = Math.max(0, Math.min(1, weekIndex / weekDays));
+            target = startFightWeekWeight - fightWeekCutKg * weekProgress;
+          }
+
+          let phase = "cut";
+          let tips = [];
+
           if (daysLeft > 7) {
             phase = "clean";
-            target = cw - i * Math.min(0.3, tocut / daysUntil);
             tips = [
-              "Normales Training",
-              "Kein Junk-Food",
-              "Wenig Salz",
-              "2–3L Wasser/Tag",
-              "Ausreichend Schlaf",
+              "Moderates Kaloriendefizit",
+              "Protein hoch halten",
+              "Normale Salzmenge",
+              "Training wie geplant",
+              "7-9h Schlaf",
             ];
           } else if (daysLeft > 4) {
             phase = "lowcarb";
-            target = limit + tocut * 0.5 - (7 - daysLeft) * 0.15;
             tips = [
-              "Max. 50g Carbs/Tag",
-              "Protein: 2g/kg Körpergewicht",
-              "Kein Obst, kein Brot",
-              "Training reduzieren",
-              "Null Salz beim Kochen",
+              "Carbs schrittweise reduzieren",
+              "Protein ca. 2 g/kg",
+              "Ballaststoffe etwas senken",
+              "Salz noch normal bis leicht reduziert",
+              "Training leicht runterfahren",
             ];
           } else if (daysLeft > 2) {
             phase = "sodium";
-            target = limit + tocut * 0.18;
             tips = [
-              "Absolut kein Salz",
-              "Wasserladung: 3–4L/Tag",
-              "Kein Fertigessen",
-              "Sauna optional",
-              "Low-Carb weiterführen",
+              "Salzreduktion jetzt sinnvoll (2-4 Tage vor Waage)",
+              "Keine stark salzigen Fertigprodukte",
+              "Low-Carb beibehalten",
+              "Gewicht morgens tracken",
             ];
           } else if (daysLeft === 2) {
             phase = "water";
-            target = limit + tocut * 0.06;
             tips = [
-              "Vormittag: 2–3L trinken",
-              "Nachmittag: Wasser stark drosseln",
-              "Salzfreies Abendessen",
-              "Warmes Bad / Sauna",
-              "Danach: minimal Wasser",
+              waterLoadingRecommended
+                ? "Water-Loading sinnvoll (Fight Week Cut >= 5%)"
+                : "Kein aggressives Water-Loading nötig (<5%)",
+              "Trinkstrategie mit Coach abstimmen",
+              "Sauna erst innerhalb der letzten 24h vor Waage",
             ];
           } else {
             phase = "cut";
-            target = limit;
             tips = [
-              "Kein Essen, kein Trinken",
-              "Sauna / Plastikanzug",
-              "Körper aktiv halten",
-              "Mentale Stärke!",
-              "Nach Wiegen: sofort rehydrieren",
+              "Nur finalen Rest cutten",
+              "Sauna/Hot Bath nur in den letzten 24h",
+              "Keine Extremmanover ohne Betreuung",
+              "Nach Waage sofort Rehydrieren",
             ];
           }
+
           out.push({
             date: dateStr,
             daysLeft,
@@ -1226,13 +772,14 @@
             tips,
           });
         }
+
         return out;
       }
 
-      // ─── HELPERS ───────────────────────────────────────────────────────────────
       function daysBetween(d1, d2) {
         return Math.ceil((new Date(d2) - new Date(d1)) / 86400000);
       }
+
       function formatDate(ds) {
         const d = new Date(ds + "T00:00:00");
         return d
@@ -1243,40 +790,36 @@
           })
           .toUpperCase();
       }
-      function getRisk(pct) {
-        if (pct <= 3)
-          return {
-            label: "GRÜN",
-            color: "#15803d",
-            bg: "#f0fdf4",
-            desc: "Sicher & manageable — kein Problem.",
-          };
-        if (pct <= 6)
-          return {
-            label: "GELB",
-            color: "#92400e",
-            bg: "#fffbeb",
-            desc: "Machbar, aber sorgfältig planen.",
-          };
-        if (pct <= 10)
-          return {
-            label: "ORANGE",
-            color: "#c2410c",
-            bg: "#fff7ed",
-            desc: "Aggressiv — Erfahrung & Disziplin nötig.",
-          };
-        return {
-          label: "ROT",
-          color: "#b91c1c",
-          bg: "#fef2f2",
-          desc: "Gefährlich — ärztliche Begleitung empfohlen.",
-        };
+
+      function riskLabel(pct) {
+        if (pct <= 3) return "GRUEN";
+        if (pct <= 6) return "GELB";
+        if (pct <= 10) return "ORANGE";
+        return "ROT";
       }
-      function sc(label, value, color) {
-        return `<div class="stat-card">
-    <div class="stat-label">${label}</div>
-    <div class="stat-value" style="color:${color}">${value}</div>
-  </div>`;
+
+      function riskColor(pct) {
+        if (pct <= 3) return "#15803d";
+        if (pct <= 6) return "#92400e";
+        if (pct <= 10) return "#c2410c";
+        return "#b91c1c";
+      }
+
+      function riskBg(pct) {
+        if (pct <= 3) return "#f0fdf4";
+        if (pct <= 6) return "#fffbeb";
+        if (pct <= 10) return "#fff7ed";
+        return "#fef2f2";
+      }
+
+      function statCard(label, value, color) {
+        return `<div class="stat-card"><div class="stat-label">${label}</div><div class="stat-value" style="color:${color}">${value}</div></div>`;
+      }
+
+      function experienceLabel(experience) {
+        if (experience === "beginner") return "Anfaenger";
+        if (experience === "intermediate") return "Intermediate";
+        return "Erfahren";
       }
     </script>
   </body>
