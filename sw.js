@@ -1,4 +1,4 @@
-const CACHE_NAME = "weight-cut-planner-v5";
+const CACHE_NAME = "weight-cut-planner-v7";
 const ASSETS = [
   "./",
   "./index.html",
